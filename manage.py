@@ -3,6 +3,19 @@
 import os
 import sys
 
+#djangorestframework
+#django-cors-headers
+#djangorestframework
+#django
+#npm
+# npm install -g create-react-app
+#npm을 이용한 방법
+# yarn global add create-react-app
+#yarn을 이용한 방법
+# create-react-app frontend
+# cd frontend
+# yarn start
+#Both daemons have to open
 
 def main():
     """Run administrative tasks."""
