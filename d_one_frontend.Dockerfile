@@ -4,17 +4,19 @@ FROM node:13.12.0-alpine
 WORKDIR /app
 
 # add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH /app/dev_d_one/frontend/node_modules/.bin:$PATH
 
 # install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm install --silent
-RUN npm install react-scripts@3.4.1 -g --silent
+#COPY package.json ./
+#COPY package-lock.json ./
+#RUN npm install --silent
+#RUN npm install react-scripts@3.4.1 -g --silent
 
 # add app
-COPY . ./
-
+COPY ./dev_d_one/frontend ./dev_d_one/frontend
+WORKDIR /app/dev_d_one/frontend
+RUN npm install --silent
+RUN npm install react-scripts@3.4.1 -g --silent
 
 #CMD ["npx", "create-react-app", "frontend"]
 RUN npm install bootstrap@4.6.0 reactstrap@8.9.0 --legacy-peer-deps
