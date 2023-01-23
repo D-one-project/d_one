@@ -6,6 +6,7 @@ import NavBar from "../components/navBar";
 import FeaturedPost from "../components/mainPage/featuredPost";
 import BodyPost from "../components/mainPage/bodyPost";
 import Footer from "../components/footer";
+import axios from 'axios';
 
 import { fakeData } from "../fakeData.js";
 
