@@ -13,8 +13,8 @@ ENV PATH /app/dev_d_one/frontend/node_modules/.bin:$PATH
 #RUN npm install react-scripts@3.4.1 -g --silent
 
 # add app
-COPY dev_d_one/frontend ./dev_d_one/frontend_test
-WORKDIR /app/dev_d_one/frontend_test
+COPY dev_d_one/frontend ./dev_d_one/frontend2
+WORKDIR /app/dev_d_one/frontend2
 RUN npm install --silent
 RUN npm install react-scripts@3.4.1 -g --silent
 
@@ -22,4 +22,4 @@ RUN npm install react-scripts@3.4.1 -g --silent
 RUN npm install bootstrap@4.6.0 reactstrap@8.9.0 --legacy-peer-deps
 RUN npm install axios@0.21.1
 # start app
-CMD ["npm", "start"]
+CMD ["npm","run", "dev"]
