@@ -13,8 +13,8 @@ ENV PATH /app/dev_d_one/frontend/node_modules/.bin:$PATH
 #RUN npm install react-scripts@3.4.1 -g --silent
 
 # add app
-COPY dev_d_one/frontend ./dev_d_one/frontend2
-WORKDIR /app/dev_d_one/frontend2
+COPY dev_d_one/frontend ./dev_d_one/frontend
+WORKDIR /app/dev_d_one/frontend
 RUN npm install --silent
 RUN npm install react-scripts@3.4.1 -g --silent
 
