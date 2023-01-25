@@ -3,14 +3,14 @@ version: '3'
 services:
   d_one_backend:
     build:
-      context: .
-      dockerfile: d_one_backend.Dockerfile
+      context: ./dev_d_one/api_d_one
+      dockerfile: ./Dockerfile
     ports:
       - '8000:8000'
 
   d_one_frontend:
     build:
-      context: .
-      dockerfile: d_one_frontend.Dockerfile
+      context: ./dev_d_one/frontend
+      dockerfile: ./Dockerfile
     ports:
       - '3000:3000'
