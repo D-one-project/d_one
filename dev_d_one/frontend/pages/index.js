@@ -8,10 +8,40 @@ import BodyPost from "../components/mainPage/bodyPost";
 import Footer from "../components/footer";
 
 import { fakeData } from "../fakeData.js";
+import axios from "axios";
 
 //pre-rendering with data.
-export async function getStaticProps() {
-  const fetchedData = fakeData;
+export async function getServerSideProps() {
+  console.log("inside getServerSideProps");
+
+  const recevedFromApi1 = await axios.get(
+    "http://localhost:8000/api/mainFeaturedPostView/"
+  );
+  const recevedFromApi2 = await axios.get(
+    "http://localhost:8000/api/bodyPostView/"
+  );
+  const recevedFromApi3 = await axios.get(
+    "http://localhost:8000/api/newsPost/"
+  );
+
+  // console.log("receved-API-data1: ", recevedFromApi1.data);
+  // console.log("receved-API-data2: ", recevedFromApi2.data);
+  // console.log("receved-API-data3: ", recevedFromApi3.data);
+
+  //need to update code for axios to get multiple urls at once and put them together into a single object? to be sent to fetchedData
+
+  const fetchedDataTest = {
+    mainFeaturedPost: recevedFromApi1.data[1],
+    bodyPost: recevedFromApi2.data,
+    newsPost: recevedFromApi3.data,
+  };
+
+  console.log("**** fetcheddataTest:", fetchedDataTest);
+
+  const fetchedData = fetchedDataTest;
+  // const fetchedData = fakeData;
+  console.log("fetched(hard coding) **** : ", fetchedData);
+
   return {
     props: {
       fetchedData,
@@ -32,7 +62,6 @@ export default function Index({ fetchedData }) {
       <FeaturedPost {...mainFeaturedPost} />
       <BodyPost bodyPost={bodyPost} newsPost={newsPost} />
       <Footer />
-      
     </>
   );
 }
