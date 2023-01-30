@@ -3,23 +3,25 @@ version: '3'
 services:
   d_one_backend:
     environment:
-      - FRONTEND_WEB_URL=http://localhost:3000
+      - FRONTEND_WEB_URL=http://d_one_frontend:3000
+      - DJANGO_BACKEND_URL=http://d_one_backend:8000
     build:
       context: ./dev_d_one/api_d_one
       dockerfile: ./Dockerfile
     ports:
       - '8000:8000'
-    links:
-      - frontend_web_app
+#    links:
+#      - d_one_frontend
 
   d_one_frontend:
     environment:
-      - DJANGO_BACKEND_URL=http://localhost:8000
+      - DJANGO_BACKEND_URL=http://d_one_backend:8000
     build:
       context: ./dev_d_one/frontend
       dockerfile: ./Dockerfile
     ports:
       - '3000:3000'
     links:
-      - backend_api_app
+      - d_one_backend
+
 

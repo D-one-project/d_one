@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-jolggccik7918+_es_9lol5qlbabk5f+f0b1630pw1m4@h35l4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -55,7 +56,8 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
-    'http://127.0.0.1:3000'
+    'http://127.0.0.1:3000',
+    os.environ['FRONTEND_WEB_URL']+'*',
 ]
 
 ROOT_URLCONF = 'api_d_one.urls'

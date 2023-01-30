@@ -21,7 +21,8 @@
     "next": "latest",
     "prop-types": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "cross-var": "^1.1.0"
   },
   "devDependencies": {
     "eslint": "latest",

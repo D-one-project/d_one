@@ -26,6 +26,7 @@ router.register(r'mainFeaturedPostView', views.mainFeaturedPostView, 'mainFeatur
 router.register(r'bodyPostView', views.bodyPostView, 'bodyPostView')
 router.register(r'newsPost', views.newsPost, 'newsPost')
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
