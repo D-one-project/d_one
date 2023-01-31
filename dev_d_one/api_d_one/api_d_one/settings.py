@@ -58,6 +58,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
     os.environ['FRONTEND_WEB_URL']+'*',
+    os.environ['FRONTEND_WEB_URL'],
 ]
 
 ROOT_URLCONF = 'api_d_one.urls'

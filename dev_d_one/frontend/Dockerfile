@@ -25,4 +25,10 @@ RUN npm install --silent
 #RUN npm install axios@0.21.1
 #RUN npm install
 # start app
-CMD ["npm","run", "dev"]
+
+# Get build argument and set environment variable
+EXPOSE 8000 3000
+ARG base_url
+ENV REACT_APP_URI=${base_url}
+
+#CMD ["npm","run", "dev"]

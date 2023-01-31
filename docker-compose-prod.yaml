@@ -13,7 +13,7 @@ services:
 #      -
     ports:
       - '8000:8000'
-    command: python manage.py runserver 0.0.0.0:8000
+
 #    links:
 #      - d_one_frontend
 
@@ -30,6 +30,6 @@ services:
       - '3000:3000'
     links:
       - d_one_backend
-    command: npm run dev
 
 
+#https://github.com/jbenavidez/react-django-docker/blob/main/docker-compose-prod.yml
