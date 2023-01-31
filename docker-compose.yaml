@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   d_one_backend:
@@ -6,11 +6,29 @@ services:
       context: ./dev_d_one/api_d_one
       dockerfile: ./Dockerfile
     ports:
-      - '8000:8000'
+      - "8000:8000"
+    environment:
+      ALLOWED_HOSTS: "*"
+    # networks:
+    #   mynetwork:
+    #     ipv4_address: 172.26.0.2
 
   d_one_frontend:
     build:
       context: ./dev_d_one/frontend
       dockerfile: ./Dockerfile
     ports:
-      - '3000:3000'
+      - "3000:3000"
+    links:
+      - d_one_backend
+    depends_on:
+      - d_one_backend
+    # networks:
+    #   mynetwork:
+    #     ipv4_address: 172.26.0.3
+# networks:
+#   mynetwork:
+#     driver: bridge
+#     ipam:
+#       config:
+#         - subnet: 172.26.0.0/16

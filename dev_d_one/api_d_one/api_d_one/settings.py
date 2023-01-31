@@ -25,8 +25,7 @@ SECRET_KEY = 'django-insecure-jolggccik7918+_es_9lol5qlbabk5f+f0b1630pw1m4@h35l4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -55,7 +54,9 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
-    'http://127.0.0.1:3000'
+    'http://127.0.0.1:3000',
+    'http://d_one_frontend:3000',
+    'http://d_one_backend:8000'
 ]
 
 ROOT_URLCONF = 'api_d_one.urls'
