@@ -17,8 +17,11 @@ export async function getServerSideProps() {
   // console.log("****** Process *******:", process.env.NEXT_ENV_VAR);
 
   ("---------------------------=-=-= baseURL below -=-=-=----------------------------");
-  const api = axios.create({ baseURL: "http://172.26.0.2:8000" });
+  // const api = axios.create({ baseURL: "http://172.26.0.2:8000" });
 
+  const api = axios.create({ baseURL: "http://backendcontainer:8000" });
+
+  console.log("API::::: ***** ____>>> : ", api);
   // console.log("api: ", api);
   console.log(
     "---------------------------=-=-=-=-=-=----------------------------"

@@ -55,8 +55,8 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
-    'http://d_one_frontend:3000',
-    'http://d_one_backend:8000'
+    # 'http://d_one_frontend:3000',
+    # 'http://d_one_backend:8000'
 ]
 
 ROOT_URLCONF = 'api_d_one.urls'

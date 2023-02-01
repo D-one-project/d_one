@@ -2,6 +2,8 @@ version: "3"
 
 services:
   d_one_backend:
+    container_name: backendcontainer
+    # underscore(_) can't be used for domain name
     build:
       context: ./dev_d_one/api_d_one
       dockerfile: ./Dockerfile
@@ -9,9 +11,8 @@ services:
       - "8000:8000"
     environment:
       ALLOWED_HOSTS: "*"
-    # networks:
-    #   mynetwork:
-    #     ipv4_address: 172.26.0.2
+    networks:
+      - my_network
 
   d_one_frontend:
     build:
@@ -23,12 +24,9 @@ services:
       - d_one_backend
     depends_on:
       - d_one_backend
-    # networks:
-    #   mynetwork:
-    #     ipv4_address: 172.26.0.3
-# networks:
-#   mynetwork:
-#     driver: bridge
-#     ipam:
-#       config:
-#         - subnet: 172.26.0.0/16
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
