@@ -25,10 +25,10 @@ import "react-alice-carousel/lib/alice-carousel.css";
 export async function getServerSideProps() {
   console.log("inside getServerSideProps");
 
-  // const api = axios.create({ baseURL: "http://backendcontainer:8000" });
+  //hardcoding for development
+  // const api = axios.create({ baseURL: "http://54.218.116.151:8000" });
 
-  //hardcoding
-  const api = axios.create({ baseURL: "http://54.218.116.151:8000" });
+  const api = axios.create({ baseURL: "http://backendcontainer:8000" });
   const recevedFromApi1 = await api.get("/api/mainFeaturedPostView/");
   const recevedFromApi2 = await api.get("/api/bodyPostView/");
   const recevedFromApi3 = await api.get("/api/newsPost/");
