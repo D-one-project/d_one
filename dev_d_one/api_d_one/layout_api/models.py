@@ -1,3 +1,6 @@
+
+from enum import unique
+from pickle import TRUE
 from django.db import models
 
 # Create your models here.
@@ -37,3 +40,8 @@ class newsPost(models.Model):
     def _str_(self):
         return self.title
 
+class email(models.Model):
+    email = models.CharField(max_length=120, null=False, blank=False, unique=TRUE)
+
+    def _str_(self):
+        return self.email

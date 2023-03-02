@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Todos, mainFeaturedPost, bodyPost, newsPost
+from .models import Todos, mainFeaturedPost, bodyPost, newsPost, email
 
 class TodoAdmin(admin.ModelAdmin):
     list_display = ('title', 'description', 'completed')
@@ -14,9 +14,14 @@ class bodyPostAdmin(admin.ModelAdmin):
 
 class newsPostAdmin(admin.ModelAdmin):
     list_display = ('title', 'description', 'image')
+
+class emailAdmin(admin.ModelAdmin):
+    list_display = ('email',)
+
 # Register your models here.
 
 admin.site.register(Todos, TodoAdmin)
 admin.site.register(mainFeaturedPost, mainFeaturedPostAdmin)
 admin.site.register(bodyPost, bodyPostAdmin)
 admin.site.register(newsPost, newsPostAdmin)
+admin.site.register(email, emailAdmin)

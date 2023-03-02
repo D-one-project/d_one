@@ -1,0 +1,23 @@
+<h1>INPUT TEST PAGE to get email list</h1>
+
+<form method="post" action="{% url 'emailView-list' %}">
+  {% csrf_token %}
+  <label for="title">Email:</label>
+  <input type="text" id="email" name="email" />
+  <input type="submit" value="Submit" />
+</form>
+
+{% for d in data %}
+
+<form method="post" action="{% url 'emailView-detail' pk=d.id %}">
+  {% csrf_token %}
+  <li>
+    -email : {{ d.email }} // - d.id: {{ d.id}}
+    <input type="hidden" name="method" value="DELETE" />
+    <input type="submit" value="remove" />
+  </li>
+</form>
+
+{% endfor %} {% if msg %} {{msg.email}} has been saved {% endif %}
+
+<!-- get post delete and the likes.. will be linked to each def function in Python viewset -->

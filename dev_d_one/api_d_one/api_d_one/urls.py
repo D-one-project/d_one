@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from layout_api import views#, mainFeaturedPostView, bodyPostView, newsPost
+from layout_api import views #, mainFeaturedPostView, bodyPostView, newsPost
+
 
 #Yea!
 router = routers.DefaultRouter()
@@ -25,9 +26,16 @@ router.register(r'todos', views.TodoView, 'todo')
 router.register(r'mainFeaturedPostView', views.mainFeaturedPostView, 'mainFeaturedPostView')
 router.register(r'bodyPostView', views.bodyPostView, 'bodyPostView')
 router.register(r'newsPost', views.newsPost, 'newsPost')
+router.register(r'emailView', views.emailView, 'emailView')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('accounts/', include('allauth.urls')),
+    
 ]
 
+
+
+for d in router.urls:
+    print('**** urls ****', d)
