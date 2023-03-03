@@ -1,12 +1,10 @@
 from rest_framework import serializers
-from .models import Todos, mainFeaturedPost, bodyPost, newsPost
+from .models import Todos, mainFeaturedPost, bodyPost, newsPost, email
 
 class TodoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Todos
         fields = ('id', 'title', 'description', 'completed')
-
-
 
 class mainFeaturedPostSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,3 +18,8 @@ class newsPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = newsPost
         fields = ('title', 'description', 'image')
+
+class emailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = email
+        fields = '__all__'

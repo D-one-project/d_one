@@ -1,81 +1,77 @@
 import * as React from "react";
-import { Box } from "@mui/material";
-
-import Head from "next/head";
-import NavBar from "../components/navBar";
-import FeaturedPost from "../components/mainPage/featuredPost";
-import BodyPost from "../components/mainPage/bodyPost";
-import Footer from "../components/footer";
-
-import { fakeData } from "../fakeData.js";
 import axios from "axios";
+import { useState } from "react";
+
+const api = axios.create({ baseURL: "http://localhost:8000" });
+
+const loadDB = async () => {
+  const emailApi = await api.get("/api/emailView/");
+  // console.log("LoadDB (emailApi.data):", emailApi.data);
+  return emailApi.data || [];
+};
 
 //pre-rendering with data.
 export async function getServerSideProps() {
   console.log("inside getServerSideProps");
-
-  // console.log("****** Process *******:", process.env.NEXT_ENV_VAR);
-
-  ("---------------------------=-=-= baseURL below -=-=-=----------------------------");
-  // const api = axios.create({ baseURL: "http://172.26.0.2:8000" });
-
-  const api = axios.create({ baseURL: "http://backendcontainer:8000" });
-
-  console.log("API::::: ***** ____>>> : ", api);
-  // console.log("api: ", api);
-  console.log(
-    "---------------------------=-=-=-=-=-=----------------------------"
-  );
-
-  const recevedFromApi1 = await api.get("/api/mainFeaturedPostView/");
-  const recevedFromApi2 = await api.get("/api/bodyPostView/");
-  const recevedFromApi3 = await api.get("/api/newsPost/");
-
-  // ?format=json
-
-  // console.log("receved-API-data1: ", recevedFromApi1.data);
-  // console.log("receved-API-data2: ", recevedFromApi2.data);
-  // console.log("receved-API-data3: ", recevedFromApi3.data);
-
-  // need to update code for axios to get multiple urls at once and put them together into a single object? to be sent to fetchedData
-
-  const fetchedDataTest = {
-    mainFeaturedPost: recevedFromApi1.data[0],
-    bodyPost: recevedFromApi2.data,
-    newsPost: recevedFromApi3.data,
-  };
-
-  // console.log("**** fetcheddataTest:", fetchedDataTest);
-  const fetchedData = fetchedDataTest;
-
-  // console.log("-----------------------");
-  // const envValue = process.env.NEXT_ENV_VAR;
-  // console.log("envValue:", envValue);
-  // console.log("-----------------------");
-
-  // const fetchedData = fakeData;
-  // console.log("fetched(hard coding) **** : ", fetchedData);
+  const loadedData = await loadDB();
 
   return {
     props: {
-      fetchedData,
+      emailData: loadedData,
     },
   };
 }
 
-export default function Index({ fetchedData }) {
-  const { mainFeaturedPost, bodyPost, newsPost } = fetchedData;
+const emailListItems = (emailList) =>
+  emailList.map((data) => {
+    return (
+      <li key={data.id}>
+        {data.email} // <b>(id:){data.id}</b>
+      </li>
+    );
+  });
+
+export default function Index(props) {
+  const [email, setEmail] = useState("");
+  const [emailList, setEmailList] = useState(props.emailData);
+  // console.log("emailList: ", emailList);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // console.log("handleSubmit Clicked");
+    // console.log(": ", email);
+
+    try {
+      const response = await api.post("/api/emailView/", { email: email });
+      // console.log("response.data: ", response.data);
+      // console.log("emailList: ", emailList);
+      const loadedData = await loadDB();
+      setEmailList(loadedData);
+      setEmail("");
+    } catch (error) {
+      console.error(error);
+      console.error("ERRORRRRRR");
+    }
+  };
+
+  const handleInputChange = (e) => {
+    // console.log("handleInputChange - e.target.value:", e.target.value);
+    setEmail(e.target.value);
+  };
 
   return (
     <>
-      <Head>
-        <title>D-one-project</title>
-      </Head>
-
-      <NavBar />
-      <FeaturedPost {...mainFeaturedPost} />
-      <BodyPost bodyPost={bodyPost} newsPost={newsPost} />
-      <Footer />
+      <h1>Wait-list</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="emailInput"
+          value={email}
+          onChange={handleInputChange}
+        />
+        <button type="submit">Submit</button>
+      </form>
+      <div>{emailListItems(emailList)}</div>
     </>
   );
 }

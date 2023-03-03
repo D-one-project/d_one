@@ -36,10 +36,55 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'corsheaders',
     'rest_framework',
     'layout_api',
+    'rest_framework.authtoken',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
+SITE_ID = 1
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '87428671665-mj1blh8eam1mnbsos7kf8f9udi9nmctm.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+        # 'INIT_PARAMS': {
+        #     'redirect_uri': 'http://127.0.0.1:8000/accounts/google/login/callback/',
+        # },
+    }
+}
+
+# ACCOUNT_FORMS = {
+#     'login': 'allauth.account.forms.LoginForm',
+#     'signup': 'allauth.account.forms.SignupForm',
+#     'add_email': 'allauth.account.forms.AddEmailForm',
+#     'change_password': 'allauth.account.forms.ChangePasswordForm',
+#     'set_password': 'allauth.account.forms.SetPasswordForm',
+#     'reset_password': 'allauth.account.forms.ResetPasswordForm',
+#     'reset_password_from_key': 'allauth.account.forms.ResetPasswordKeyForm',
+#     'disconnect': 'allauth.socialaccount.forms.DisconnectForm',
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,6 +95,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 CORS_ORIGIN_WHITELIST = [
@@ -75,6 +121,16 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 WSGI_APPLICATION = 'api_d_one.wsgi.application'
