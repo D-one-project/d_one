@@ -2,6 +2,7 @@ import * as React from "react";
 import axios from "axios";
 import { useState } from "react";
 import Link from "next/link";
+import { TextField } from "@mui/material";
 
 export const api = axios.create({ baseURL: "http://localhost:8000" });
 // export const api = axios.create({ baseURL: "http://backendcontainer:8000" });
@@ -45,7 +46,7 @@ export default function WaitList(props) {
     } catch (error) {
       console.log("Duplicated Email or no Email input");
       console.log("error:", error.response);
-      // console.log(error);
+      console.log(error);
     }
   };
 
@@ -72,8 +73,16 @@ export default function WaitList(props) {
     emailList.map((data) => {
       return (
         <li key={data.id}>
-          <button onClick={() => handleClickDelete(data.id)}>X</button>
-          <Link href={`/waitList/${data.id}`}>
+          <button
+            onClick={() => handleClickDelete(data.id)}
+            style={{ marginRight: "1rem" }}
+          >
+            X
+          </button>
+          <Link
+            href={`/waitList/${data.id}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
             {data.email} // <b>(id:){data.id}</b>
           </Link>
         </li>
@@ -83,14 +92,40 @@ export default function WaitList(props) {
   return (
     <div
       style={{
-        margin: "2rem",
+        // margin: "2rem",
+        padding: "2rem",
+        height: "100vh",
+        color: "white",
+        backgroundImage:
+          "url('https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/waitlist_background.png')",
       }}
     >
+      <img src="https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/Meetlof_logo.png" />
       <h1>Wait-list</h1>
       <form onSubmit={handleSubmit}>
-        <input
+        {/* <input
           type="text"
           name="emailInput"
+          value={email}
+          onChange={handleInputChange}
+        /> */}
+        <TextField
+          sx={{
+            "& .MuiInputLabel-root": {
+              color: "white",
+            },
+            "& .MuiInput-underline:before": {
+              borderBottomColor: "white",
+            },
+            "& .MuiInputBase-input": {
+              color: "white",
+            },
+          }}
+          color="success"
+          fullWidth
+          // id="standard-basic"
+          label="Input your email address here"
+          variant="standard"
           value={email}
           onChange={handleInputChange}
         />

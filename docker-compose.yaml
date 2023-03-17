@@ -12,11 +12,14 @@ services:
       - "8000:8000"
     environment:
       ALLOWED_HOSTS: "*"
+      FRONTEND_HOST: frontendcontainer
+      # FRONTEND_PORT: 3000
     networks:
       - my_network
 
   d_one_frontend:
-    # container_name: frontendcontainer
+    container_name: frontendcontainer
+    hostname: frontendcontainer
     build:
       context: ./dev_d_one/frontend
       dockerfile: ./Dockerfile

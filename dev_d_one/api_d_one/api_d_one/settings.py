@@ -107,8 +107,8 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:3000',
     'http://d_one-d_one_frontend-1',
     'http://d_one_frontend:3000',
-    'http://frontendcontainer',
-    
+    'http://frontendcontainer:3000',
+
 ]
 
 ROOT_URLCONF = 'api_d_one.urls'
