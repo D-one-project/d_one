@@ -1,4 +1,4 @@
-import { api } from "./index";
+import { api } from "../waitList/index";
 
 waitListPage.getInitialProps = async (ctx) => {
   console.log("getInitialProps - query:", ctx.query);

@@ -3,6 +3,7 @@ version: "3"
 services:
   d_one_backend:
     container_name: backendcontainer
+    hostname: backendcontainer
     # underscore(_) can't be used for domain name
     build:
       context: ./dev_d_one/api_d_one
@@ -15,15 +16,19 @@ services:
       - my_network
 
   d_one_frontend:
+    # container_name: frontendcontainer
     build:
       context: ./dev_d_one/frontend
       dockerfile: ./Dockerfile
     ports:
       - "3000:3000"
-    links:
-      - d_one_backend
-    depends_on:
-      - d_one_backend
+    environment:
+      BACKEND_HOST: backendcontainer
+      # BACKEND_PORT: 8000
+    # links:
+    #   - d_one_backend
+    # depends_on:
+    #   - d_one_backend
     networks:
       - my_network
 

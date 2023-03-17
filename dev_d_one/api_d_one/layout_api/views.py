@@ -9,8 +9,9 @@ from rest_framework.decorators import action
 
 # Create your views here.
 from rest_framework import viewsets
-from .serializers import TodoSerializer, emailSerializer, mainFeaturedPostSerializer, bodyPostSerializer, newsPostSerializer
+from .serializers import TodoSerializer, emailSerializer, mainFeaturedPostSerializer, bodyPostSerializer, newsPostSerializer, userSerializer
 from .models import Todos, email, mainFeaturedPost, bodyPost, newsPost
+from django.contrib.auth.models import User
 
 class TodoView(viewsets.ModelViewSet):
     serializer_class = TodoSerializer
@@ -28,7 +29,6 @@ class bodyPostView(viewsets.ModelViewSet):
 class newsPost(viewsets.ModelViewSet):
     serializer_class = newsPostSerializer
     queryset = newsPost.objects.all()
-    
 
 
 class emailView(viewsets.ModelViewSet):
@@ -37,27 +37,36 @@ class emailView(viewsets.ModelViewSet):
     # permission_classes = [permissions.IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        print('[Django-ModelViewSet-router] Create')
-        print('+++++++++++++++++')
-        pprint.pprint(self)
-        pprint.pprint(request)
+        print('** Create [POST]')
+
         return super().create(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
-        print('[Django-ModelViewSet-router] Destroy')
-        print('+++++++++++++++++')
+        print('** Destroy')
+        # print('+++++++++++++++++')
         return super().destroy(request, *args, **kwargs)
     
     def list(self, request, *args, **kwargs):
-        print('[Django-ModelViewSet-router] List')
-        print('+++++++++++++++++')
-        pprint.pprint(self)
-        pprint.pprint(request)
+        print('** List [GET]')
+        # print('+++++++++++++++++')
+        # pprint.pprint(self)
+        # pprint.pprint(request)
         return super().list(request, *args, **kwargs)
 
     def retrieve(self, request, *args, **kwargs):
-        print('[Django-ModelViewSet-router] Detail(Retrieve)')
-        print('+++++++++++++++++')
-        pprint.pprint(self)
-        pprint.pprint(request)
+        print('** Detail(Retrieve)')
+        # print('+++++++++++++++++')
+        # pprint.pprint(self)
+        # pprint.pprint(request)
         return super().retrieve(request, *args, **kwargs)
+
+class userView(viewsets.ModelViewSet):
+    serializer_class = userSerializer
+    queryset = User.objects.all()
+
+    def create(self, request, *args, **kwargs):
+        print('receved data from frontend : ', request.data)
+
+        return super().create(request, *args, **kwargs)
+        # try catch here and show err msg when error?
+    
