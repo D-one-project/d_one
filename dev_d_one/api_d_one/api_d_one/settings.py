@@ -42,10 +42,12 @@ INSTALLED_APPS = [
     'layout_api',
     'rest_framework.authtoken',
 
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
+
+    'users',
 ]
 
 SITE_ID = 1
@@ -98,11 +100,14 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True #added due to docker communication errors between front and back
+CORS_ALLOW_CREDENTIALS = True #added
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
-    # 'http://d_one_frontend:3000',
-    # 'http://d_one_backend:8000'
+    'http://d_one-d_one_frontend-1',
+    'http://d_one_frontend:3000',
+    'http://frontendcontainer'
 ]
 
 ROOT_URLCONF = 'api_d_one.urls'

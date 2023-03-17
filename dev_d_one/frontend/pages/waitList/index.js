@@ -5,10 +5,11 @@ import Link from "next/link";
 
 export const api = axios.create({ baseURL: "http://localhost:8000" });
 // export const api = axios.create({ baseURL: "http://backendcontainer:8000" });
+// console.log("api:", api);
 
 const loadDB = async () => {
   const emailApi = await api.get("/api/emailView/");
-  // console.log("LoadDB (emailApi.data):", emailApi.data);
+  console.log("LoadDB (emailApi.data):", emailApi.data);
   return emailApi.data || [];
 };
 
@@ -34,7 +35,7 @@ export default function WaitList(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log("handleSubmit Clicked");
-    // console.log(": ", email);
+    console.log("**email : ", email);
 
     try {
       await api.post("/api/emailView/", { email: email });
@@ -43,12 +44,13 @@ export default function WaitList(props) {
       setEmail("");
     } catch (error) {
       console.log("Duplicated Email or no Email input");
+      console.log("error:", error.response);
       // console.log(error);
     }
   };
 
   const handleInputChange = (e) => {
-    // console.log("handleInputChange - e.target.value:", e.target.value);
+    console.log("handleInputChange - e.target.value:", e.target.value);
     setEmail(e.target.value);
   };
 
