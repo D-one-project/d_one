@@ -1,5 +1,4 @@
-version: "3"
-
+version: '3.7'
 services:
   d_one_backend:
     container_name: backendcontainer
@@ -14,9 +13,12 @@ services:
 #      ALLOWED_HOSTS: "*"
 #      FRONTEND_HOST: frontendcontainer
 #      FRONTEND_PORT: 3000
+#      - FRONTEND_URL=http://frontendcontainer:3000
       - FRONTEND_URL=frontendcontainer
     networks:
       - my_network
+    restart: unless-stopped
+    command: gunicorn server.wsgi:application --bind 0.0.0.0:8000 -w 2
 
   d_one_frontend:
     container_name: frontendcontainer
@@ -38,6 +40,33 @@ services:
     networks:
       - my_network
 
-networks:
-  my_network:
-    driver: bridge
+  frontend:
+    container_name: frontend
+    image: frontend:custom
+    build: ./frontend
+    restart: unless-stopped
+    expose:
+      - 3000
+    command: serve -s /usr/src/app/build -l 3000
+    depends_on:
+      - backend
+  nginx:
+    container_name: nginx
+    image: nginx:custom
+    build: ./nginx
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes:
+      - static:/usr/src/app/static
+      - media:/usr/src/app/media
+    depends_on:
+      - frontend
+
+volumes:
+  postgres:
+    external: true
+  static:
+    external: false
+  media:
+    external: true

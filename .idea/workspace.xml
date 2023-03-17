@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4006b1be-f6d3-4eb0-92ce-71b634c05b90" name="Default Changelist" comment="changed with Yun's frontend work">
+      <change afterPath="$PROJECT_DIR$/.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev_d_one/api_d_one/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/dev_d_one/api_d_one/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev_d_one/api_d_one/api_d_one/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dev_d_one/api_d_one/api_d_one/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev_d_one/frontend/pages/waitList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dev_d_one/frontend/pages/waitList/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,6 +123,8 @@
       <workItem from="1673259796371" duration="22382000" />
       <workItem from="1674666575736" duration="104000" />
       <workItem from="1674666714645" duration="150000" />
+      <workItem from="1679029063195" duration="4000" />
+      <workItem from="1679029204302" duration="8288000" />
     </task>
     <task id="LOCAL-00001" summary="django react backbone setup">
       <created>1673257757462</created>

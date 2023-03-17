@@ -1,4 +1,4 @@
-FROM python:3.8.2
+FROM python:3.9.5
 RUN mkdir -p /app/api_d_one
 WORKDIR /app/api_d_one
 COPY . ./

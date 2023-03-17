@@ -3,8 +3,8 @@ import axios from "axios";
 import { useState } from "react";
 import Link from "next/link";
 
-export const api = axios.create({ baseURL: "http://localhost:8000" });
-// export const api = axios.create({ baseURL: "http://backendcontainer:8000" });
+// export const api = axios.create({ baseURL: "http://localhost:8000" });
+export const api = axios.create({ baseURL: process.env.BACKEND_URL });
 // console.log("api:", api);
 
 const loadDB = async () => {
