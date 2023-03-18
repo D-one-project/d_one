@@ -18,9 +18,19 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements/requirements_backend.txt
 #
 #
+
+ARG SERVICE_ARG=development
+#ENV DJANGO_SETTINGS_MODULE=api_d_one.settings.$SERVICE_ARG
+#ENV SERVICE_ENV=$SERVICE_ARG
+
 #
-EXPOSE 8000/udp 8000/tcp
+EXPOSE 8000/udp 8000/tcp 3000/udp 3000/tcp 80/udp 80/tcp
 #
 #WORKDIR /app/api_d_one
 #CMD ["python", "manage.py", "runserver", "0.0.0.0:8000","--noreload"]
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+#CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+#CMD ["python", "manage.py", "makemigrations"]
+CMD ["python", "manage.py", "migrate"]
+CMD ["python", "manage.py", "collectstatic"]
+CMD ["gunicorn", "-c", "gunicorn_config.py", "api_d_one.wsgi:application"]

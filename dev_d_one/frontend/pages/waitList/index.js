@@ -4,7 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 
 // export const api = axios.create({ baseURL: "http://localhost:8000" });
-export const api = axios.create({ baseURL: process.env.BACKEND_URL });
+// export const api = axios.create({ baseURL: process.env.DJANGO_API_URL });
+// export const api = axios.create({ baseURL: "http://backendcontainer:8000" });
+export const api = axios.create({ baseURL: `${process.env.BACKEND_ENDPOINT}` });
+// export const api = axios.create({ baseURL: BACKEND_URL });
+
+export const base_url = `${process.env.BACKEND_ENDPOINT}`;
 // console.log("api:", api);
 
 const loadDB = async () => {
@@ -29,16 +34,30 @@ export async function getServerSideProps() {
 
 export default function WaitList(props) {
   const [email, setEmail] = useState("");
+  console.log("backend_url");
+  console.log(base_url);
   const [emailList, setEmailList] = useState(props.emailData);
   // console.log("emailList: ", emailList);
 
+
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log("handleSubmit Clicked");
     console.log("**email : ", email);
 
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(email),
+};
+
+    
     try {
-      await api.post("/api/emailView/", { email: email });
+      await api.post(base_url+"/api/emailView/", { "email": email });
+      console.log("----------after json---------");
+      console.log(requestOptions);
+      // await fetch(base_url+'/api/emailView/',requestOptions)
       const loadedData = await loadDB();
       setEmailList(loadedData);
       setEmail("");

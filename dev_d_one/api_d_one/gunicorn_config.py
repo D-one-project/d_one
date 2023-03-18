@@ -1,0 +1,15 @@
+pidfile = 'app01.pid'
+worker_tmp_dir = '/dev/shm'
+worker_class = 'gthread'
+workers = 1
+worker_connections = 50
+timeout = 60000000
+keepalive = 1000
+threads = 4
+proc_name = 'backend'
+bind = '0.0.0.0:8000'
+backlog = 2048
+accesslog = '-'
+errorlog = '-'
+# user = 'ubuntu'
+# group = 'ubuntu'

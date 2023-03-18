@@ -87,7 +87,7 @@ SOCIALACCOUNT_PROVIDERS = {
 #     'reset_password_from_key': 'allauth.account.forms.ResetPasswordKeyForm',
 #     'disconnect': 'allauth.socialaccount.forms.DisconnectForm',
 # }
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -98,6 +98,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True #added due to docker communication errors between front and back
@@ -110,7 +112,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://frontendcontainer:3000',
     # 'FRONTENDCONTAINER',
     # 'frontend_ip',
-    os.environ['FRONTEND_URL'],
+    str(os.environ['REACT_SERVICE_HOST']),
     
 ]
 
@@ -196,3 +198,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_URL = '/static/'
+STATIC_ROOT_INT = os.path.join(BASE_DIR, 'api_d_one')
+STATIC_ROOT = os.path.join(STATIC_ROOT_INT, 'staticfiles')

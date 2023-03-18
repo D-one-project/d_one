@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from layout_api import views #, mainFeaturedPostView, bodyPostView, newsPost
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 #Yea!
 router = routers.DefaultRouter()
@@ -30,12 +31,12 @@ router.register(r'userView', views.userView,'userView')
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls), 
+    path('admin/', admin.site.urls) , 
     path('api/', include(router.urls)), # it provides GET, POST, DELETE, etc automatically by rest_framework
     # path('accounts/', include('allauth.urls')),
     path('users/', include('users.urls'))
     
-]
+]#+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 
