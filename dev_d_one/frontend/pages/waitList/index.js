@@ -2,7 +2,7 @@ import * as React from "react";
 import axios from "axios";
 import { useState } from "react";
 import Link from "next/link";
-import { TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 
 export const api = axios.create({ baseURL: "http://localhost:8000" });
 // export const api = axios.create({ baseURL: "http://backendcontainer:8000" });
@@ -109,29 +109,36 @@ export default function WaitList(props) {
           value={email}
           onChange={handleInputChange}
         /> */}
-        <TextField
-          sx={{
-            "& .MuiInputLabel-root": {
-              color: "white",
-            },
-            "& .MuiInput-underline:before": {
-              borderBottomColor: "white",
-            },
-            "& .MuiInputBase-input": {
-              color: "white",
-            },
-          }}
-          color="success"
-          fullWidth
-          // id="standard-basic"
-          label="Input your email address here"
-          variant="standard"
-          value={email}
-          onChange={handleInputChange}
-        />
-        <button type="submit">
-          <b>Count me in!</b>
-        </button>
+        <div style={{ display: "flex" }}>
+          <TextField
+            sx={{
+              "& .MuiInputLabel-root": {
+                color: "white",
+              },
+              "& .MuiInput-underline:before": {
+                borderBottomColor: "white",
+              },
+              "& .MuiInputBase-input": {
+                color: "white",
+              },
+            }}
+            color="success"
+            fullWidth
+            // id="standard-basic"
+            label="Input your email address here"
+            variant="standard"
+            value={email}
+            onChange={handleInputChange}
+          />
+          <Button
+            variant="contained"
+            type="submit"
+            color="success"
+            sx={{ width: "200px" }}
+          >
+            Count me in!
+          </Button>
+        </div>
       </form>
       <h2>Input email address to be in the wait-list.</h2>
       <h5>Below list is temporarily shown to see if REST api works with DB</h5>
