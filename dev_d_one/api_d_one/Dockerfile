@@ -19,7 +19,9 @@ RUN pip install -r requirements/requirements_backend.txt
 #
 #
 
-ARG SERVICE_ARG=development
+
+ARG REACT_SERVICE_HOST
+ENV REACT_SERVICE_HOST=${REACT_SERVICE_HOST}
 #ENV DJANGO_SETTINGS_MODULE=api_d_one.settings.$SERVICE_ARG
 #ENV SERVICE_ENV=$SERVICE_ARG
 

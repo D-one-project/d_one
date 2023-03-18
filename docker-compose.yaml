@@ -8,12 +8,14 @@ services:
     build:
       context: ./dev_d_one/api_d_one
       dockerfile: ./Dockerfile
+      args:
+        REACT_SERVICE_HOST: $REACT_SERVICE_HOST
     ports:
       - "8000:8000"
     environment:
-      - ALLOWED_HOSTS=*
+      - ALLOWED_HOSTS=* #d_one_backend,localhost,127.0.0.1,d_one_frontend,nginx
       - BACKEND_ENDPOINT=http://backendcontainer:8000
-      - REACT_SERVICE_HOST=d_one_frontend
+#      - REACT_SERVICE_HOST=d_one_frontend
     networks:
       - d_one_network
 
@@ -22,10 +24,13 @@ services:
     build:
       context: ./dev_d_one/frontend
       dockerfile: ./Dockerfile
+      args:
+        BACKEND_ENDPOINT: $BACKEND_ENDPOINT
     ports:
       - "3000:3000"
-    environment:
-      - BACKEND_ENDPOINT=http://backendcontainer:8000
+
+
+#      - BACKEND_ENDPOINT=http://backendcontainer:8000
 #      - BACKENDCONTAINER=http://backendcontainer:8000
 #       BACKEND_PORT: 8000
 #       BACKEND_HOST: backendcontainer

@@ -1,15 +1,15 @@
 import * as React from "react";
-import axios from "axios";
+import { api, base_url } from "../../components/api_axios";
 import { useState } from "react";
 import Link from "next/link";
 
 // export const api = axios.create({ baseURL: "http://localhost:8000" });
 // export const api = axios.create({ baseURL: process.env.DJANGO_API_URL });
 // export const api = axios.create({ baseURL: "http://backendcontainer:8000" });
-export const api = axios.create({ baseURL: `${process.env.BACKEND_ENDPOINT}` });
+// export const api = axios.create({ baseURL: `${process.env.BACKEND_ENDPOINT}` });
 // export const api = axios.create({ baseURL: BACKEND_URL });
 
-export const base_url = `${process.env.BACKEND_ENDPOINT}`;
+// export const base_url = `${process.env.BACKEND_ENDPOINT}`;
 // console.log("api:", api);
 
 const loadDB = async () => {
@@ -28,7 +28,7 @@ export async function getServerSideProps() {
       emailData: loadedData,
     },
   };
-}
+};
 
 // ================================================================================
 
@@ -46,18 +46,31 @@ export default function WaitList(props) {
     // console.log("handleSubmit Clicked");
     console.log("**email : ", email);
 
+
+  const data_email = { email: email};
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(email),
+    body: JSON.stringify(data_email),
 };
 
     
     try {
-      await api.post(base_url+"/api/emailView/", { "email": email });
+      // await api.post(base_url+"/api/emailView/", { "email": email });
       console.log("----------after json---------");
       console.log(requestOptions);
-      // await fetch(base_url+'/api/emailView/',requestOptions)
+      fetch(base_url+'/api/emailView/',requestOptions).then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Network response was not ok.');
+        }
+      }).then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
       const loadedData = await loadDB();
       setEmailList(loadedData);
       setEmail("");

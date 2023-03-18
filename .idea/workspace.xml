@@ -5,19 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4006b1be-f6d3-4eb0-92ce-71b634c05b90" name="Default Changelist" comment="changed with Yun's frontend work">
-      <change afterPath="$PROJECT_DIR$/dev_d_one/api_d_one/app01.pid" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dev_d_one/api_d_one/gunicorn_config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dev_d_one/nginx/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dev_d_one/nginx/Dockerfile.bak" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dev_d_one/nginx/nginx.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dev_d_one/nginx/nginx.conf.bak" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dev_d_one/frontend/components/api_axios.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dev_d_one/frontend/pages/test_url/test.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.yaml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dev_d_one/api_d_one/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/dev_d_one/api_d_one/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dev_d_one/api_d_one/api_d_one/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/dev_d_one/api_d_one/api_d_one/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dev_d_one/api_d_one/api_d_one/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/dev_d_one/api_d_one/api_d_one/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dev_d_one/api_d_one/requirements/requirements_backend.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dev_d_one/api_d_one/requirements/requirements_backend.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dev_d_one/frontend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/dev_d_one/frontend/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev_d_one/frontend/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/dev_d_one/frontend/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev_d_one/frontend/pages/user/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/dev_d_one/frontend/pages/user/signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev_d_one/frontend/pages/waitList/[waitListId].js" beforeDir="false" afterPath="$PROJECT_DIR$/dev_d_one/frontend/pages/waitList/[waitListId].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dev_d_one/frontend/pages/waitList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dev_d_one/frontend/pages/waitList/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev_d_one/nginx/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/dev_d_one/nginx/nginx.conf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -28,8 +28,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="Python Script" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -133,7 +133,7 @@
       <workItem from="1674666575736" duration="104000" />
       <workItem from="1674666714645" duration="150000" />
       <workItem from="1679029063195" duration="4000" />
-      <workItem from="1679029204302" duration="26538000" />
+      <workItem from="1679029204302" duration="33598000" />
     </task>
     <task id="LOCAL-00001" summary="django react backbone setup">
       <created>1673257757462</created>
@@ -212,7 +212,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679087089362</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="changed with Yun's frontend work">
+      <created>1679132677730</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1679132677731</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

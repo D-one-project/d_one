@@ -1,3 +1,5 @@
+import { api,base_url } from "../../components/api_axios";
+
 import { api } from "../../components/api_axios";
 
 import * as React from "react";
@@ -26,10 +28,12 @@ export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    console.log(data)
+    console.log(base_url)
     const dataTobeSent = {
-      email: data.get("email"),
-      password: data.get("password"),
-      username: data.get("username"),
+      email: 'qwdqwdqw',
+      password: 'fwefewfwefew',
+      username: 'ergregergregr',
       testData: "test",
     };
     console.log(dataTobeSent);

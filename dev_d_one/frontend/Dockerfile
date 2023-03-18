@@ -21,7 +21,11 @@ RUN npm install --silent
 #RUN npm install react-scripts@3.4.1 -g --silent
 
 ARG BACKEND_ENDPOINT
-ENV DJANGO_API_URL=${BACKEND_ENDPOINT}
+ENV REACT_APP_DJANGO_API_URL=${BACKEND_ENDPOINT}
+
+ENV NEXT_PUBLIC_DJANGO_API_URL=${BACKEND_ENDPOINT}
+
+
 #CMD ["npx", "create-react-app", "frontend_saved_for_ref"]
 #RUN npm install bootstrap@4.6.0 reactstrap@8.9.0 --legacy-peer-deps
 #RUN npm install axios@0.21.1
