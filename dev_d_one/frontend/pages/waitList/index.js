@@ -4,9 +4,19 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button, TextField } from "@mui/material";
 
+import { useRouter } from "next/router";
+
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 export const api = axios.create({ baseURL: "http://localhost:8000" });
 // export const api = axios.create({ baseURL: "http://backendcontainer:8000" });
 // console.log("api:", api);
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 const loadDB = async () => {
   const emailApi = await api.get("/api/emailView/");
@@ -33,6 +43,8 @@ export default function WaitList(props) {
   const [emailList, setEmailList] = useState(props.emailData);
   // console.log("emailList: ", emailList);
 
+  const router = useRouter();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log("handleSubmit Clicked");
@@ -41,12 +53,16 @@ export default function WaitList(props) {
     try {
       await api.post("/api/emailView/", { email: email });
       const loadedData = await loadDB();
-      setEmailList(loadedData);
+      loadedData.map((data) => {
+        if (data.email == email) router.push(`/waitList/${data.id}`);
+      });
+      // setEmailList(loadedData);
       setEmail("");
     } catch (error) {
       console.log("Duplicated Email or no Email input");
       console.log("error:", error.response);
       console.log(error);
+      setEmail("");
     }
   };
 
@@ -75,13 +91,13 @@ export default function WaitList(props) {
         <li key={data.id}>
           <button
             onClick={() => handleClickDelete(data.id)}
-            style={{ marginRight: "1rem" }}
+            style={{ marginRight: "1rem", backgroundColor: "grey" }}
           >
             X
           </button>
           <Link
             href={`/waitList/${data.id}`}
-            style={{ textDecoration: "none", color: "inherit" }}
+            style={{ textDecoration: "none", color: "grey" }}
           >
             {data.email} // <b>(id:){data.id}</b>
           </Link>
@@ -90,59 +106,68 @@ export default function WaitList(props) {
     });
 
   return (
-    <div
-      style={{
-        // margin: "2rem",
-        padding: "2rem",
-        height: "100vh",
-        color: "white",
-        backgroundImage:
-          "url('https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/waitlist_background.png')",
-      }}
-    >
-      <img src="https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/Meetlof_logo.png" />
-      <h1>Wait-list</h1>
-      <form onSubmit={handleSubmit}>
-        {/* <input
+    <ThemeProvider theme={darkTheme}>
+      <div
+        style={{
+          // margin: "2rem",
+          padding: "2rem",
+          height: "100vh",
+          color: "white",
+          overflow: "auto",
+          backgroundImage:
+            "url('https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/waitlist_background.png')",
+        }}
+      >
+        <img src="https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/Meetlof_logo.png" />
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "80%",
+            paddingTop: "5rem",
+            paddingLeft: "2rem",
+          }}
+        >
+          <form onSubmit={handleSubmit}>
+            {/* <input
           type="text"
           name="emailInput"
           value={email}
           onChange={handleInputChange}
         /> */}
-        <div style={{ display: "flex" }}>
-          <TextField
-            sx={{
-              "& .MuiInputLabel-root": {
-                color: "white",
-              },
-              "& .MuiInput-underline:before": {
-                borderBottomColor: "white",
-              },
-              "& .MuiInputBase-input": {
-                color: "white",
-              },
-            }}
-            color="success"
-            fullWidth
-            // id="standard-basic"
-            label="Input your email address here"
-            variant="standard"
-            value={email}
-            onChange={handleInputChange}
-          />
-          <Button
-            variant="contained"
-            type="submit"
-            color="success"
-            sx={{ width: "200px" }}
-          >
-            Count me in!
-          </Button>
+            <div style={{ display: "flex" }}>
+              <TextField
+                fullWidth
+                label="Input your email address here"
+                variant="standard"
+                value={email}
+                color="primary"
+                onChange={handleInputChange}
+              />
+              <Button
+                variant="contained"
+                type="submit"
+                color="primary"
+                sx={{ width: "200px" }}
+              >
+                Count me in!
+              </Button>
+            </div>
+          </form>
+          <h2>
+            Join our waitlist today for the chance to win one of ten $25 gift
+            cards.
+          </h2>
+
+          <h5 style={{ marginTop: "4rem", color: "grey" }}>
+            Below list is temporarily shown to see if REST api works with DB.
+            When am email registered to email properly, it should be liseted
+            below right away along with its id.
+          </h5>
+          <div>{emailListItems(emailList)}</div>
         </div>
-      </form>
-      <h2>Input email address to be in the wait-list.</h2>
-      <h5>Below list is temporarily shown to see if REST api works with DB</h5>
-      <div>{emailListItems(emailList)}</div>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }

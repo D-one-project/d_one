@@ -1,4 +1,5 @@
 import { api } from "../waitList/index";
+import Link from "next/link";
 
 waitListPage.getInitialProps = async (ctx) => {
   console.log("getInitialProps - query:", ctx.query);
@@ -40,6 +41,10 @@ export default function waitListPage(props) {
         and benefits we have in the works. Thank you for your interest and
         support, and we look forward to having you as a part of our community!
       </h4>
+
+      <Link href="/waitList/" style={{ textDecoration: "none", color: "grey" }}>
+        <h3>Back to waitlist page</h3>
+      </Link>
     </div>
   );
 }
