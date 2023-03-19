@@ -3,6 +3,8 @@ import axios from "axios";
 import { useState } from "react";
 import Link from "next/link";
 import { Button, TextField } from "@mui/material";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 
 import { useRouter } from "next/router";
 
@@ -118,14 +120,48 @@ export default function WaitList(props) {
             "url('https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/waitlist_background.png')",
         }}
       >
-        <img src="https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/Meetlof_logo.png" />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "self-start",
+            justifyContent: "space-between",
+          }}
+        >
+          <img src="https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/Meetlof_logo.png" />
+          <div>
+            <Button
+              sx={{ marginRight: "1rem", borderRadius: "2rem" }}
+              variant="outlined"
+              size="large"
+              color="inherit"
+            >
+              <InfoOutlinedIcon sx={{ marginRight: "5px" }} />
+              About
+            </Button>
+            <Link href="/user/signup" style={{ textDecoration: "none" }}>
+              <Button
+                sx={{
+                  marginRight: "1rem",
+                  borderRadius: "2rem",
+                  color: "black",
+                }}
+                variant="contained"
+                size="large"
+                color="inherit"
+              >
+                <EmojiEmotionsIcon sx={{ marginRight: "5px" }} />
+                Join us
+              </Button>
+            </Link>
+          </div>
+        </div>
 
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             width: "80%",
-            paddingTop: "5rem",
+            paddingTop: "12rem",
             paddingLeft: "2rem",
           }}
         >
