@@ -3,9 +3,9 @@
   "version": "5.0.0",
   "private": true,
   "proxy": {
-    "/apiv01": {
-      "target": "${process.env.NEXT_PUBLIC_DJANGO_API_URL}/apiv01/",
-      "pathRewrite": { "^/apiv01": "/apiv01" },
+    "/api": {
+      "target": "${process.env.NEXT_PUBLIC_DJANGO_API_URL}",
+      "pathRewrite": { "^/api": "" },
       "changeOrigin": true
     }
   },

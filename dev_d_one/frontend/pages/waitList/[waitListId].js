@@ -1,4 +1,4 @@
-import { api } from "./index";
+import { api } from "../../components/api_axios";
 
 waitListPage.getInitialProps = async (ctx) => {
   console.log("getInitialProps - query:", ctx.query);

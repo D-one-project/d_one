@@ -17,23 +17,27 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from layout_api import views #, mainFeaturedPostView, bodyPostView, newsPost
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 #Yea!
 router = routers.DefaultRouter()
 router.register(r'todos', views.TodoView, 'todo')
-
 router.register(r'mainFeaturedPostView', views.mainFeaturedPostView, 'mainFeaturedPostView')
 router.register(r'bodyPostView', views.bodyPostView, 'bodyPostView')
 router.register(r'newsPost', views.newsPost, 'newsPost')
 router.register(r'emailView', views.emailView, 'emailView')
+router.register(r'userView', views.userView,'userView')
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
-    path('accounts/', include('allauth.urls')),
-    
-]
+    path('admin/', admin.site.urls) , 
+    path('apiv01/', include(router.urls)), # it provides GET, POST, DELETE, etc automatically by rest_framework
+    # path('accounts/', include('allauth.urls')),
+    path('users/', include('users.urls')),
+
+    path('apiv01/csrf/', views.csrf_token_view, name='csrf_token'),
+]#+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 
