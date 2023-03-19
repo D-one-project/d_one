@@ -2,6 +2,13 @@
   "name": "nextjs",
   "version": "5.0.0",
   "private": true,
+  "proxy": {
+    "/apiv01": {
+      "target": "${process.env.NEXT_PUBLIC_DJANGO_API_URL}/apiv01/",
+      "pathRewrite": { "^/apiv01": "/apiv01" },
+      "changeOrigin": true
+    }
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

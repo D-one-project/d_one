@@ -17,13 +17,30 @@ http {
     listen 5000;
     server_name localhost;
     location / {
+        proxy_http_version 1.1;
+        proxy_pass http://frontendcontainer:3000; #this makes all the api returns to 80 from 3000
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Real-IP	$remote_addr;
+        proxy_set_header X-Real-IP      $remote_addr;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
         proxy_redirect off;
         proxy_buffers 8 24k;
         proxy_buffer_size 4k;
-        proxy_pass http://localhost;
         proxy_set_header Host $host;
+        proxy_headers_hash_max_size 1024;
+        proxy_headers_hash_bucket_size 64;
+        proxy_read_timeout 6000000;
+        proxy_connect_timeout 6000000;
+        proxy_send_timeout 6000000;
+    }
+
+    location /apiv01/ {
+        rewrite ^/apiv01(/.*)$ $1 break;
+        proxy_pass http://backendcontainer:8000/apiv01/; # this makes all the http request with api url rediecting to 8000/api
+        proxy_set_header Host $host;
+        proxy_redirect off;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Real-IP $remote_addr;
     }
   }
 }

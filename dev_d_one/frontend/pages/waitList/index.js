@@ -1,8 +1,8 @@
 import * as React from "react";
-import { api, base_url } from "../../components/api_axios";
+// import { api, base_url } from "../../components/api_axios";
 import { useState } from "react";
 import Link from "next/link";
-
+import { api,base_url } from "../../components/api_axios";
 // export const api = axios.create({ baseURL: "http://localhost:8000" });
 // export const api = axios.create({ baseURL: process.env.DJANGO_API_URL });
 // export const api = axios.create({ baseURL: "http://backendcontainer:8000" });
@@ -12,10 +12,17 @@ import Link from "next/link";
 // export const base_url = `${process.env.BACKEND_ENDPOINT}`;
 // console.log("api:", api);
 
+
+
 const loadDB = async () => {
-  const emailApi = await api.get("/api/emailView/");
-  console.log("LoadDB (emailApi.data):", emailApi.data);
-  return emailApi.data || [];
+  try {
+    const emailApi = await api.get("/apiv01/emailView/");
+    console.log("LoadDB (emailApi.data):", emailApi.data);
+    return emailApi.data || [];
+  } catch (error) {
+    console.error("Error in loadDB:", error);
+    return [];
+  }
 };
 
 //pre-rendering with data.
@@ -40,7 +47,7 @@ export default function WaitList(props) {
   // console.log("emailList: ", emailList);
 
 
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log("handleSubmit Clicked");
@@ -54,12 +61,12 @@ export default function WaitList(props) {
     body: JSON.stringify(data_email),
 };
 
-    
+
     try {
       // await api.post(base_url+"/api/emailView/", { "email": email });
       console.log("----------after json---------");
       console.log(requestOptions);
-      fetch(base_url+'/api/emailView/',requestOptions).then(response => {
+      fetch('/apiv01/emailView/',requestOptions).then(response => {
         if (response.ok) {
           return response.json();
         } else {
@@ -90,7 +97,7 @@ export default function WaitList(props) {
     console.log("handleClickDelete Clicked");
     console.log("id: ", id);
     // try {
-    await api.delete(`/api/emailView/${id}/`);
+    await api.delete(`/apiv01/emailView/${id}/`);
     // } catch (e) {
     //   console.log("error");
     // }
@@ -105,7 +112,7 @@ export default function WaitList(props) {
       return (
         <li key={data.id}>
           <button onClick={() => handleClickDelete(data.id)}>X</button>
-          <Link href={`/waitList/${data.id}`}>
+          <Link href={`/apiv01/waitList/${data.id}`}>
             {data.email} // <b>(id:){data.id}</b>
           </Link>
         </li>

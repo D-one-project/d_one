@@ -35,7 +35,7 @@ export default function SignUp() {
     console.log(dataTobeSent);
     // const email = "tesasf32333t@gmal.com";
 
-    await api.post("/api/userView/", dataTobeSent);
+    await api.post("/apiv01/userView/", dataTobeSent);
 
     //To use validation interactively upon inputting data, then use state variables.
     //It's using FormData for now to collect data from each component and then to send them over to backend

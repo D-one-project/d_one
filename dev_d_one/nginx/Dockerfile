@@ -4,3 +4,5 @@
 # SOURCE: https://github.com/nethacker/ubuntu-flask-gunicorn-nginx-docker-compose
 FROM nginx:1.23.1
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+

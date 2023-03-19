@@ -55,6 +55,7 @@ services:
   nginx:
     container_name: nginx
     build: ./dev_d_one/nginx
+
 #    links:
 #        - backendcontainer
 #    environment:
