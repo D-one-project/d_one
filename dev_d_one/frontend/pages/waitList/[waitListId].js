@@ -1,10 +1,11 @@
-import { api } from "../waitList/index";
+// import { api } from "../waitList/index";
 import Link from "next/link";
+import { api } from "../../components/api_axios";
 
 waitListPage.getInitialProps = async (ctx) => {
   console.log("getInitialProps - query:", ctx.query);
   const { waitListId } = ctx.query;
-  const { data } = await api.get(`/api/emailView/${waitListId}/`);
+  const { data } = await api.get(`/apiv01/emailView/${waitListId}/`);
   const { email } = data;
   return { waitListId, email };
 };

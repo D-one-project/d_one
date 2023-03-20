@@ -35,6 +35,7 @@ class emailView(viewsets.ModelViewSet):
     serializer_class = emailSerializer
     queryset = email.objects.all()
     # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
 
     def create(self, request, *args, **kwargs):
         print('** Create [POST]')
@@ -69,4 +70,9 @@ class userView(viewsets.ModelViewSet):
 
         return super().create(request, *args, **kwargs)
         # try catch here and show err msg when error?
-    
+from django.middleware import csrf
+from django.http import JsonResponse
+
+def csrf_token_view(request):
+    token = csrf.get_token(request)
+    return JsonResponse({'csrfToken': token})

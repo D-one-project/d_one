@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -87,7 +87,7 @@ SOCIALACCOUNT_PROVIDERS = {
 #     'reset_password_from_key': 'allauth.account.forms.ResetPasswordKeyForm',
 #     'disconnect': 'allauth.socialaccount.forms.DisconnectForm',
 # }
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -98,6 +98,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True #added due to docker communication errors between front and back
@@ -108,7 +110,13 @@ CORS_ORIGIN_WHITELIST = [
     'http://d_one-d_one_frontend-1',
     'http://d_one_frontend:3000',
     'http://frontendcontainer:3000',
-
+    # 'FRONTENDCONTAINER',
+    # 'frontend_ip',
+    str(os.environ['REACT_SERVICE_HOST']),
+    'http://frontendcontainer',
+    'http://localhost',
+    'http://127.0.0.1',
+    
 ]
 
 ROOT_URLCONF = 'api_d_one.urls'
@@ -193,3 +201,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_URL = '/static/'
+STATIC_ROOT_INT = os.path.join(BASE_DIR, 'api_d_one')
+STATIC_ROOT = os.path.join(STATIC_ROOT_INT, 'staticfiles')

@@ -1,4 +1,4 @@
-import { api } from "../waitList/index";
+import { api } from "../../components/api_axios";
 
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
@@ -42,7 +42,7 @@ export default function SignUp() {
     console.log(dataTobeSent);
     // const email = "tesasf32333t@gmal.com";
 
-    await api.post("/api/userView/", dataTobeSent);
+    await api.post("/apiv01/userView/", dataTobeSent);
 
     alert("Successfully saved into DB");
     router.push("/waitList/");

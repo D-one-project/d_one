@@ -1,5 +1,5 @@
 import * as React from "react";
-import axios from "axios";
+// import { api, base_url } from "../../components/api_axios";
 import { useState } from "react";
 import Link from "next/link";
 import { Button, TextField } from "@mui/material";
@@ -10,9 +10,17 @@ import { useRouter } from "next/router";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-export const api = axios.create({ baseURL: "http://localhost:8000" });
+// export const api = axios.create({ baseURL: "http://localhost:8000" });
+import { api, base_url } from "../../components/api_axios";
+
+// export const api = axios.create({ baseURL: "http://localhost:8000" });
+// export const api = axios.create({ baseURL: process.env.DJANGO_API_URL });
 // export const api = axios.create({ baseURL: "http://backendcontainer:8000" });
-// console.log("api:", api);
+// export const api = axios.create({ baseURL: `${process.env.BACKEND_ENDPOINT}` });
+// export const api = axios.create({ baseURL: BACKEND_URL });
+
+// export const base_url = `${process.env.BACKEND_ENDPOINT}`;
+console.log("api:", base_url);
 
 const darkTheme = createTheme({
   palette: {
@@ -21,9 +29,15 @@ const darkTheme = createTheme({
 });
 
 const loadDB = async () => {
-  const emailApi = await api.get("/api/emailView/");
-  console.log("LoadDB (emailApi.data):", emailApi.data);
-  return emailApi.data || [];
+  try {
+    const emailApi = await api.get("/apiv01/emailView/");
+    console.log("LoadDB (emailApi.data):", emailApi.data);
+    // return emailApi.data || [];
+    return [];
+  } catch (error) {
+    console.error("Error in loadDB:", error);
+    return [];
+  }
 };
 
 //pre-rendering with data.
@@ -42,6 +56,8 @@ export async function getServerSideProps() {
 
 export default function WaitList(props) {
   const [email, setEmail] = useState("");
+  console.log("backend_url");
+  console.log(base_url);
   const [emailList, setEmailList] = useState(props.emailData);
   // console.log("emailList: ", emailList);
 
@@ -52,40 +68,63 @@ export default function WaitList(props) {
     // console.log("handleSubmit Clicked");
     console.log("**email : ", email);
 
-    try {
-      await api.post("/api/emailView/", { email: email });
-      const loadedData = await loadDB();
-      loadedData.map((data) => {
-        if (data.email == email) router.push(`/waitList/${data.id}`);
-      });
-      // setEmailList(loadedData);
-      setEmail("");
-    } catch (error) {
-      console.log("Duplicated Email or no Email input");
-      console.log("error:", error.response);
-      console.log(error);
-      setEmail("");
-    }
+    // const data_email = { email: email };
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify(data_email),
+    // };
+
+    // try {
+    //   // await api.post(base_url+"/api/emailView/", { "email": email });
+    //   console.log("----------after json---------");
+    //   console.log(requestOptions);
+    //   fetch("/apiv01/emailView/", requestOptions)
+    //     .then((response) => {
+    //       if (response.ok) {
+    //         return response.json();
+    //       } else {
+    //         throw new Error("Network response was not ok.");
+    //       }
+    //     })
+    //     .then((data) => {
+    //       console.log(data);
+    //     })
+    //     .catch((error) => {
+    //       console.error("There was a problem with the fetch operation:", error);
+    //     });
+    //   const loadedData = await loadDB();
+    //   loadedData.map((data) => {
+    //     if (data.email == email) router.push(`/waitList/${data.id}`);
+    //   });
+    //   // setEmailList(loadedData);
+    //   setEmail("");
+    // } catch (error) {
+    //   console.log("Duplicated Email or no Email input");
+    //   console.log("error:", error.response);
+    //   console.log(error);
+    //   setEmail("");
+    // }
   };
 
   const handleInputChange = (e) => {
     console.log("handleInputChange - e.target.value:", e.target.value);
-    setEmail(e.target.value);
+    // setEmail(e.target.value);
   };
 
   const handleClickDelete = async (id) => {
     console.log("handleClickDelete Clicked");
-    console.log("id: ", id);
-    // try {
-    await api.delete(`/api/emailView/${id}/`);
-    // } catch (e) {
-    //   console.log("error");
-    // }
-    const loadedData = await loadDB();
-    setEmailList(loadedData);
+    // console.log("id: ", id);
+    // // try {
+    // await api.delete(`/apiv01/emailView/${id}/`);
+    // // } catch (e) {
+    // //   console.log("error");
+    // // }
+    // const loadedData = await loadDB();
+    // setEmailList(loadedData);
   };
 
-  // Components ==========================================
+  // // Components ==========================================
 
   const emailListItems = (emailList) =>
     emailList.map((data) => {
@@ -98,7 +137,7 @@ export default function WaitList(props) {
             X
           </button>
           <Link
-            href={`/waitList/${data.id}`}
+            href={`/apiv01/waitList/${data.id}`}
             style={{ textDecoration: "none", color: "grey" }}
           >
             {data.email} // <b>(id:){data.id}</b>
