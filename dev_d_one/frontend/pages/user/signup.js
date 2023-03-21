@@ -154,6 +154,12 @@ export default function SignUp() {
                   >
                     Sign Up
                   </Button>
+                  <Link
+                    href="/waitList/"
+                    style={{ textDecoration: "none", color: "grey" }}
+                  >
+                    <h3>Move to waitlist page</h3>
+                  </Link>
                   <Grid container justifyContent="flex-end"></Grid>
                 </Box>
               </Box>
