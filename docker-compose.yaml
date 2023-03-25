@@ -15,7 +15,7 @@ services:
     environment:
       - ALLOWED_HOSTS=* #d_one_backend,localhost,127.0.0.1,d_one_frontend,nginx
       - BACKEND_ENDPOINT=http://backendcontainer:8000
-#      - REACT_SERVICE_HOST=d_one_frontend
+    #      - REACT_SERVICE_HOST=d_one_frontend
     networks:
       - d_one_network
 
@@ -29,13 +29,12 @@ services:
     ports:
       - "3000:3000"
 
-
-#      - BACKEND_ENDPOINT=http://backendcontainer:8000
-#      - BACKENDCONTAINER=http://backendcontainer:8000
-#       BACKEND_PORT: 8000
-#       BACKEND_HOST: backendcontainer
-#      - BACKEND_URL=http://backendcontainer:8000
-#    - BACKEND_URL=backendcontainer
+    #      - BACKEND_ENDPOINT=http://backendcontainer:8000
+    #      - BACKENDCONTAINER=http://backendcontainer:8000
+    #       BACKEND_PORT: 8000
+    #       BACKEND_HOST: backendcontainer
+    #      - BACKEND_URL=http://backendcontainer:8000
+    #    - BACKEND_URL=backendcontainer
     # links:
     #   - d_one_backend
     # depends_on:
@@ -43,25 +42,25 @@ services:
     networks:
       - d_one_network
 
-#  nginx:
-#    image: nginx:latest
-#    ports:
-#      - 80:80
-#    volumes:
-#      - ./nginx/nginx-proxy.conf:/etc/nginx/conf.d/default.conf:ro
-#      - ./frontend/build:/var/www/frontend
-#    networks:
-#      - d_one_network
+  #  nginx:
+  #    image: nginx:latest
+  #    ports:
+  #      - 80:80
+  #    volumes:
+  #      - ./nginx/nginx-proxy.conf:/etc/nginx/conf.d/default.conf:ro
+  #      - ./frontend/build:/var/www/frontend
+  #    networks:
+  #      - d_one_network
   nginx:
     container_name: nginx
     build: ./dev_d_one/nginx
 
-#    links:
-#        - backendcontainer
-#    environment:
-#      - FRONTEND_URL=frontendcontainer
+    #    links:
+    #        - backendcontainer
+    #    environment:
+    #      - FRONTEND_URL=frontendcontainer
     ports:
-        - '80:80'
+      - "80:80"
     networks:
       - d_one_network
 networks:

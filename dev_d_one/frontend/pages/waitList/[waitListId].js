@@ -1,9 +1,11 @@
+// import { api } from "../waitList/index";
+import Link from "next/link";
 import { api } from "../../components/api_axios";
 
 waitListPage.getInitialProps = async (ctx) => {
   console.log("getInitialProps - query:", ctx.query);
   const { waitListId } = ctx.query;
-  const { data } = await api.get(`/api/emailView/${waitListId}/`);
+  const { data } = await api.get(`/apiv01/emailView/${waitListId}/`);
   const { email } = data;
   return { waitListId, email };
 };
@@ -12,13 +14,27 @@ export default function waitListPage(props) {
   const { waitListId, email } = props;
 
   return (
-    <div>
-      <h1>individual page</h1>
-      <h3 style={{ fontWeight: 200 }}>
-        Id: {waitListId} || {email} has been registered!!
-      </h3>
-      <h4 style={{ fontWeight: 300 }}>
-        <label style={{ fontSize: "2rem", fontWeight: 900 }}>{email}</label>,
+    <div
+      style={{
+        // margin: "2rem",
+        padding: "10rem",
+        height: "100vh",
+        color: "white",
+        backgroundImage:
+          "url('https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/waitlist_background.png')",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginBottom: "3rem",
+        }}
+      >
+        <img src="https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/Meetlof_logo.png" />
+      </div>
+      <h1>{email} has been registered!!</h1>
+      <h4 style={{ fontWeight: 300, fontSize: "25px" }}>
         Thank you for joining our waitlist! We can't wait to show you all the
         features. As soon as our service gets online, we'll send you an email to
         let you know, so keep an eye on your inbox. In the meantime, stay tuned
@@ -26,6 +42,10 @@ export default function waitListPage(props) {
         and benefits we have in the works. Thank you for your interest and
         support, and we look forward to having you as a part of our community!
       </h4>
+
+      <Link href="/waitList/" style={{ textDecoration: "none", color: "grey" }}>
+        <h3>Back to waitlist page</h3>
+      </Link>
     </div>
   );
 }
