@@ -112,7 +112,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://frontendcontainer:3000',
     # 'FRONTENDCONTAINER',
     # 'frontend_ip',
-    str(os.environ['REACT_SERVICE_HOST']),
+    # str(os.environ['REACT_SERVICE_HOST']),
     'http://frontendcontainer',
     'http://localhost',
     'http://127.0.0.1',

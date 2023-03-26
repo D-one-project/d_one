@@ -16,6 +16,8 @@ services:
       - ALLOWED_HOSTS=* #d_one_backend,localhost,127.0.0.1,d_one_frontend,nginx
       - BACKEND_ENDPOINT=http://backendcontainer:8000
     #      - REACT_SERVICE_HOST=d_one_frontend
+    # volumes:
+    #   - ./dev_d_one/api_d_one:/app
     networks:
       - d_one_network
 
@@ -28,6 +30,8 @@ services:
         BACKEND_ENDPOINT: $BACKEND_ENDPOINT
     ports:
       - "3000:3000"
+    volumes:
+      - ./dev_d_one/frontend:/app/frontend
 
     #      - BACKEND_ENDPOINT=http://backendcontainer:8000
     #      - BACKENDCONTAINER=http://backendcontainer:8000
@@ -61,6 +65,8 @@ services:
     #      - FRONTEND_URL=frontendcontainer
     ports:
       - "80:80"
+    # volumes:
+    #   - ./dev_d_one/nginx:/etc/nginx/conf.d
     networks:
       - d_one_network
 networks:

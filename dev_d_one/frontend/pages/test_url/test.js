@@ -1,6 +1,6 @@
-import { api,base_url } from "../../components/api_axios";
+import { api, base_url } from "../../components/api_axios";
 
-import { api } from "../../components/api_axios";
+// import { api } from "../../components/api_axios";
 
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
@@ -28,12 +28,12 @@ export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(data)
-    console.log(base_url)
+    console.log(data);
+    console.log(base_url);
     const dataTobeSent = {
-      email: 'qwdqwdqw',
-      password: 'fwefewfwefew',
-      username: 'ergregergregr',
+      email: "qwdqwdqw",
+      password: "fwefewfwefew",
+      username: "ergregergregr",
       testData: "test",
     };
     console.log(dataTobeSent);

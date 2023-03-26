@@ -2,18 +2,12 @@
 import Link from "next/link";
 import { api } from "../../components/api_axios";
 
-// import Router from "next/router";
-
 waitListPage.getInitialProps = async (ctx) => {
   console.log("getInitialProps - query:", ctx.query);
-  const { waitListId } = ctx.query;
-  // try {
-  const { data } = await api.get(`/apiv01/emailView/${waitListId}/`);
+  const { signedUpId } = ctx.query;
+  const { data } = await api.get(`/apiv01/userView/${signedUpId}/`);
   const { email } = data;
-  return { waitListId, email };
-  // } catch (e) {
-  //   console.log("hah.a..");
-  // }
+  return { signedUpId, email };
 };
 
 export default function waitListPage(props) {
@@ -39,14 +33,15 @@ export default function waitListPage(props) {
       >
         <img src="https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/Meetlof_logo.png" />
       </div>
-      <h1>"{email}" now in the waitlist.</h1>
+      <h1>"{email}" has been registered!!</h1>
       <h4 style={{ fontWeight: 300, fontSize: "25px" }}>
-        Thank you for joining our waitlist! We can't wait to show you all the
-        features. As soon as our service gets online, we'll send you an email to
-        let you know, so keep an eye on your inbox. In the meantime, stay tuned
-        for updates and get ready to experience all the exciting new features
-        and benefits we have in the works. Thank you for your interest and
-        support, and we look forward to having you as a part of our community!
+        Thank you for registering with us! We're excited to have you as a part
+        of our community. We've just sent you an email with a verification link
+        - simply click on the link to confirm your email and complete your
+        registration. Once you've completed the verification process, you'll
+        have access to all the beta version of our service. Thank you for your
+        interest and support, and we look forward to having you as a valued
+        member of our community.
       </h4>
 
       <Link href="/waitList/" style={{ textDecoration: "none", color: "grey" }}>

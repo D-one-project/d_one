@@ -40,12 +40,13 @@ export default function SignUp() {
       testData: "test",
     };
     console.log(dataTobeSent);
-    // const email = "tesasf32333t@gmal.com";
-
     await api.post("/apiv01/userView/", dataTobeSent);
 
-    alert("Successfully saved into DB");
-    router.push("/waitList/");
+    const users = await api.get("/apiv01/userView/");
+    users.data.map((data) => {
+      // console.log("data inside map:: ", data);
+      if (data.email === dataTobeSent.email) router.push(`/user/${data.id}`);
+    });
 
     //To use validation interactively upon inputting data, then use state variables.
     //It's using FormData for now to collect data from each component and then to send them over to backend
@@ -53,120 +54,121 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div
-        style={{
+      <Box
+        sx={{
           // margin: "2rem",
-          padding: "10rem",
-          height: "100%",
-          width: "100%",
+          padding: "1rem",
+          height: "100vh",
+          width: "100vw",
           color: "white",
           backgroundImage:
             "url('https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/signup_background.png')",
           backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundPosition: "left",
           // display: "flex",
           // flexDirection: "row",
         }}
       >
-        <Grid container spacing={2}>
-          <Grid item xs={6}></Grid>
-          <Grid item xs={6}>
-            <Container component="main" maxWidth="xs">
-              <CssBaseline />
-              <Box
-                sx={{
-                  marginTop: 8,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                  <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                  Sign up
-                </Typography>
+        <div
+          style={{
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <Grid container spacing={2}>
+            <Grid item md={6}></Grid>
+            <Grid item xs={12} md={6}>
+              <Container component="main" maxWidth="xs">
+                <CssBaseline />
                 <Box
-                  component="form" // FORM starts here?
-                  noValidate
-                  onSubmit={handleSubmit}
-                  sx={{ mt: 3 }}
+                  sx={{
+                    marginTop: 8,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
                 >
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                      <TextField
-                        // autoComplete="given-name"
-                        name="username"
-                        required
-                        fullWidth
-                        id="username"
-                        label="User Name"
-                        autoFocus
-                      />
-                    </Grid>
-                    {/* <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid> */}
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="new-password"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <FormControlLabel
-                        control={
-                          <Checkbox value="allowExtraEmails" color="primary" />
-                        }
-                        label="I want to receive inspiration, marketing promotions and updates via email."
-                        name="checked"
-                      />
-                    </Grid>
-                  </Grid>
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
+                  <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                    <LockOutlinedIcon />
+                  </Avatar>
+                  <Typography component="h1" variant="h5">
+                    Sign up
+                  </Typography>
+                  <Box
+                    component="form" // FORM starts here?
+                    noValidate
+                    onSubmit={handleSubmit}
+                    sx={{ mt: 3 }}
                   >
-                    Sign Up
-                  </Button>
-                  <Link
-                    href="/waitList/"
-                    style={{ textDecoration: "none", color: "grey" }}
-                  >
-                    <h3>Move to waitlist page</h3>
-                  </Link>
-                  <Grid container justifyContent="flex-end"></Grid>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <TextField
+                          // autoComplete="given-name"
+                          name="username"
+                          required
+                          fullWidth
+                          id="username"
+                          label="User Name"
+                          autoFocus
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          required
+                          fullWidth
+                          id="email"
+                          label="Email Address"
+                          name="email"
+                          autoComplete="email"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          required
+                          fullWidth
+                          name="password"
+                          label="Password"
+                          type="password"
+                          id="password"
+                          autoComplete="new-password"
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              value="allowExtraEmails"
+                              color="primary"
+                            />
+                          }
+                          label="I want to receive inspiration, marketing promotions and updates via email."
+                          name="checked"
+                        />
+                      </Grid>
+                    </Grid>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      sx={{ mt: 3, mb: 2 }}
+                    >
+                      Sign Up
+                    </Button>
+                    <Link
+                      href="/waitList/"
+                      style={{ textDecoration: "none", color: "grey" }}
+                    >
+                      <h3>Move to waitlist page</h3>
+                    </Link>
+                    <Grid container justifyContent="flex-end"></Grid>
+                  </Box>
                 </Box>
-              </Box>
-            </Container>
+              </Container>
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
+        </div>
+      </Box>
     </ThemeProvider>
   );
 }

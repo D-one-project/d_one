@@ -1,3 +1,7 @@
+// To run locally,
+// 1. Go to 'api_axios.js' and then change axios route to localhost.
+// 2. Go to 'next.config.js' and then comment out the entire code to be diabled.
+
 import * as React from "react";
 // import { api, base_url } from "../../components/api_axios";
 import { useEffect, useState } from "react";
@@ -44,10 +48,11 @@ const darkTheme = createTheme({
 
 export default function WaitList() {
   const [email, setEmail] = useState("");
-  // console.log("backend_url");
-  // console.log(base_url);
   const [emailList, setEmailList] = useState([]);
-  // console.log("emailList: ", emailList);
+  const [emailValidator, setEmailValidator] = useState(false);
+  const emailVaidateErrorMsg = emailValidator
+    ? "Invalid email format, please try again"
+    : "Input your email address here";
   const router = useRouter();
 
   const loadDB = async () => {
@@ -70,28 +75,39 @@ export default function WaitList() {
     console.log("handleSubmit Clicked");
     console.log("**email : ", email);
 
-    try {
-      await api.post("/apiv01/emailView/", { email: email });
-      const loadedData = await loadDB();
-      loadedData.map((data) => {
-        if (data.email == email) {
-          // console.log("inside loadedData before push", data.id);
-          return router.push(`/waitList/${data.id}`);
-        }
-      });
-      setEmailList(loadedData);
+    if (emailValidator) {
+      alert(emailVaidateErrorMsg);
       setEmail("");
-    } catch (error) {
-      console.log("Duplicated Email or no Email input");
-      console.log("error:", error.response);
-      console.log(error);
-      setEmail("");
+    } else {
+      try {
+        await api.post("/apiv01/emailView/", { email: email });
+        const loadedData = await loadDB();
+        loadedData.map((data) => {
+          if (data.email == email) {
+            // console.log("inside loadedData before push", data.id);
+            return router.push(`/waitList/${data.id}`);
+          }
+        });
+        setEmailList(loadedData);
+        setEmail("");
+      } catch (error) {
+        console.log("Duplicated Email or no Email input");
+        console.log("error:", error.response);
+        console.log(error);
+        setEmail("");
+      }
     }
   };
 
   const handleInputChange = (e) => {
-    console.log("handleInputChange - e.target.value:", e.target.value);
+    // console.log("handleInputChange - e.target.value:", e.target.value);
     setEmail(e.target.value);
+
+    if (!/\S+@\S+\.\S+/.test(e.target.value)) {
+      setEmailValidator(true);
+    } else {
+      setEmailValidator(false);
+    }
   };
 
   const handleClickDelete = async (id) => {
@@ -182,7 +198,7 @@ export default function WaitList() {
             display: "flex",
             flexDirection: "column",
             width: "80%",
-            paddingTop: "12rem",
+            paddingTop: "16rem",
             paddingLeft: "2rem",
           }}
         >
@@ -196,16 +212,17 @@ export default function WaitList() {
             <div style={{ display: "flex" }}>
               <TextField
                 fullWidth
-                label="Input your email address here"
+                label={emailVaidateErrorMsg}
                 variant="standard"
                 value={email}
                 color="primary"
                 onChange={handleInputChange}
+                error={emailValidator}
               />
               <Button
                 variant="contained"
                 type="submit"
-                color="primary"
+                color={emailValidator ? "error" : "primary"}
                 sx={{ width: "200px" }}
               >
                 Count me in!
@@ -217,12 +234,12 @@ export default function WaitList() {
             cards.
           </h2>
 
-          <h5 style={{ marginTop: "4rem", color: "grey" }}>
+          {/* <h5 style={{ marginTop: "4rem", color: "grey" }}>
             Below list is temporarily shown to see if REST api works with DB.
             When am email registered to email properly, it should be liseted
             below right away along with its id.
           </h5>
-          <div>{emailListItems(emailList)}</div>
+          <div>{emailListItems(emailList)}</div> */}
         </div>
       </div>
     </ThemeProvider>
