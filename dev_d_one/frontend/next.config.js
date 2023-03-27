@@ -6,7 +6,7 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/apiv01/:path*',
+        source: "/apiv01/:path*",
         destination: `${process.env.NEXT_PUBLIC_DJANGO_API_URL}/apiv01/:path*`,
       },
     ];
