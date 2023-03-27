@@ -25,7 +25,6 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
-    "@next/font": "latest",
     "axios": "^1.2.5",
     "firebase": "^9.18.0",
     "next": "latest",
