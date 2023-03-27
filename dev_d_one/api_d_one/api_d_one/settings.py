@@ -47,35 +47,35 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount',
     # 'allauth.socialaccount.providers.google',
 
-    'users',
+    # 'users',
 ]
 
 SITE_ID = 1
 
 # Provider specific settings
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
-        'APP': {
-            'client_id': '87428671665-mj1blh8eam1mnbsos7kf8f9udi9nmctm.apps.googleusercontent.com',
-            'secret': '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',
-            'key': ''
-        },
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        },
-        'OAUTH_PKCE_ENABLED': True,
-        # 'INIT_PARAMS': {
-        #     'redirect_uri': 'http://127.0.0.1:8000/accounts/google/login/callback/',
-        # },
-    }
-}
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         # For each OAuth based provider, either add a ``SocialApp``
+#         # (``socialaccount`` app) containing the required client
+#         # credentials, or list them here:
+#         'APP': {
+#             'client_id': '87428671665-mj1blh8eam1mnbsos7kf8f9udi9nmctm.apps.googleusercontent.com',
+#             'secret': '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',
+#             'key': ''
+#         },
+#         'SCOPE': [
+#             'profile',
+#             'email',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         },
+#         'OAUTH_PKCE_ENABLED': True,
+#         # 'INIT_PARAMS': {
+#         #     'redirect_uri': 'http://127.0.0.1:8000/accounts/google/login/callback/',
+#         # },
+#     }
+# }
 
 # ACCOUNT_FORMS = {
 #     'login': 'allauth.account.forms.LoginForm',
@@ -144,7 +144,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 
     # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
+    # 'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 WSGI_APPLICATION = 'api_d_one.wsgi.application'

@@ -5,7 +5,9 @@
   "proxy": {
     "/apiv01": {
       "target": "${process.env.NEXT_PUBLIC_DJANGO_API_URL}/apiv01/",
-      "pathRewrite": { "^/apiv01": "/apiv01" },
+      "pathRewrite": {
+        "^/apiv01": "/apiv01"
+      },
       "changeOrigin": true
     }
   },
@@ -25,6 +27,7 @@
     "@mui/material": "latest",
     "@next/font": "latest",
     "axios": "^1.2.5",
+    "firebase": "^9.18.0",
     "next": "latest",
     "prop-types": "latest",
     "react": "latest",
