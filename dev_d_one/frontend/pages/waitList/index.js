@@ -187,7 +187,22 @@ export default function WaitList() {
                 color="inherit"
               >
                 <EmojiEmotionsIcon sx={{ marginRight: "5px" }} />
-                Join us
+                Join Beta
+              </Button>
+            </Link>
+            <Link href="/user/login" style={{ textDecoration: "none" }}>
+              <Button
+                sx={{
+                  marginRight: "1rem",
+                  borderRadius: "2rem",
+                  color: "black",
+                }}
+                variant="contained"
+                size="large"
+                color="inherit"
+              >
+                <EmojiEmotionsIcon sx={{ marginRight: "5px" }} />
+                Beta Login
               </Button>
             </Link>
           </div>

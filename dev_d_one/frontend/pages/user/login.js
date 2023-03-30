@@ -25,60 +25,25 @@ const theme = createTheme({
 });
 
 export default function SignUp() {
-  // const [email, setEmail] = useState();
-  // const [username, setUsername] = useState();
-  // const [password, setPassword] = useState();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [pwValidator, setPwValidator] = useState(false);
-  //if true, it means password not matching. this boolean data goes into error prop of TextField to display red text
-  const pwVaidateErrorMsg = pwValidator
-    ? "Password not matching"
-    : "Input your password here";
-
-  useEffect(() => {
-    if (password === confirmPassword) {
-      setPwValidator(false); //if false, it means matching
-    } else {
-      setPwValidator(true);
-    }
-  }, [password, confirmPassword]);
 
   const router = useRouter();
 
   //handleSubmit function
   const handleSubmit = async (event) => {
-    // event.preventDefault();
-    // const data = new FormData(event.currentTarget);
     const dataTobeSent = {
       email: email,
       username: email,
       password: password,
-      // testData: "test",
-      // if passwrod not matching, it shouldn't be running
     };
     console.log(dataTobeSent);
-
-    if (!pwValidator) {
-      await api.post("/apiv01/userView/", dataTobeSent);
-
-      const users = await api.get("/apiv01/userView/");
-      users.data.map((data) => {
-        // console.log("data inside map:: ", data);
-        if (data.email === dataTobeSent.email) router.push(`/user/${data.id}`);
-      });
-    } else {
-      alert("password not matching");
-    }
-
-    //To use validation interactively upon inputting data, then use state variables.
-    //It's using FormData for now to collect data from each component and then to send them over to backend
+    console.log("log in logic to be here");
+    alert("In the proecess to log in");
   };
 
   const handleInputChangeEmail = (e) => setEmail(e.target.value);
   const handleInputChangePw = (e) => setPassword(e.target.value);
-  const handleInputChangeCfPw = (e) => setConfirmPassword(e.target.value);
 
   return (
     <ThemeProvider theme={theme}>
@@ -121,7 +86,7 @@ export default function SignUp() {
                     <LockOutlinedIcon />
                   </Avatar>
                   <Typography component="h1" variant="h5">
-                    Sign up
+                    Login
                   </Typography>
                   <Box
                     component="form" // FORM starts here?
@@ -130,17 +95,6 @@ export default function SignUp() {
                     sx={{ mt: 3 }}
                   >
                     <Grid container spacing={2}>
-                      {/* <Grid item xs={12}>
-                        <TextField
-                          // autoComplete="given-name"
-                          name="username"
-                          required
-                          fullWidth
-                          id="username"
-                          label="User Name"
-                          autoFocus
-                        />
-                      </Grid> */}
                       <Grid item xs={12}>
                         <TextField
                           required
@@ -165,32 +119,15 @@ export default function SignUp() {
                           onChange={handleInputChangePw}
                           value={password}
                         />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          required
-                          fullWidth
-                          // name="confirmPassword"
-                          label={pwVaidateErrorMsg}
-                          type="password"
-                          id="confirmPassword"
-                          autoComplete="new-password"
-                          onChange={handleInputChangeCfPw}
-                          value={confirmPassword}
-                          error={pwValidator}
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              value="allowExtraEmails"
-                              color="primary"
-                            />
-                          }
-                          label="I want to receive inspiration, marketing promotions and updates via email."
-                          name="checked"
-                        />
+                        <Link
+                          href="/user/login"
+                          style={{
+                            color: "grey",
+                            textDecoration: "none",
+                          }}
+                        >
+                          Forgot your password?
+                        </Link>
                       </Grid>
                     </Grid>
                     <Button
@@ -199,15 +136,20 @@ export default function SignUp() {
                       variant="contained"
                       sx={{ mt: 3, mb: 2 }}
                     >
-                      Sign Up
+                      Log in
                     </Button>
+                    <Link href="/user/signup">
+                      <h3>Don’t have an account? Sign-up!</h3>
+                    </Link>
                     <Link
                       href="/waitList/"
                       style={{ textDecoration: "none", color: "grey" }}
                     >
-                      <h3>Move to waitlist page</h3>
+                      <h3>Go to Waitlist page</h3>
                     </Link>
-                    <Grid container justifyContent="flex-end"></Grid>
+                    {/* <Grid container justifyContent="flex">
+                      xfasdf
+                    </Grid> */}
                   </Box>
                 </Box>
               </Container>
