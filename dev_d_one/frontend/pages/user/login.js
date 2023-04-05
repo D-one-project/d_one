@@ -27,23 +27,59 @@ const theme = createTheme({
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isPwIncorrect, setIsPwIncorrect] = useState(false);
+  const isPwIncorrectMsg = isPwIncorrect
+    ? "At least 8 characters, No entirely numeric"
+    : "Input your password here";
 
   const router = useRouter();
 
   //handleSubmit function
   const handleSubmit = async (event) => {
+    event.preventDefault();
     const dataTobeSent = {
       email: email,
       username: email,
       password: password,
     };
     console.log(dataTobeSent);
-    console.log("log in logic to be here");
-    alert("In the proecess to log in");
+
+    if (isPwIncorrect === false) {
+      console.log("you are in the right path");
+      await api
+        .post("/apiv01/userView/login/", dataTobeSent)
+        .then((response) => {
+          alert(response.data.message);
+        })
+        .catch((response) => {
+          alert("Login credentials incorrect");
+        });
+      setEmail("");
+      setPassword("");
+      return;
+    } else {
+      alert("Incorrect password format");
+      setPassword("");
+      return;
+    }
+  };
+
+  const validatePassword = (password) => {
+    const regex = /^[0-9]+$/; // regex to check if the password is entirely numeric
+    if (password.length < 8) {
+      return true;
+    } else if (regex.test(password)) {
+      return true;
+    }
+    return false;
   };
 
   const handleInputChangeEmail = (e) => setEmail(e.target.value);
-  const handleInputChangePw = (e) => setPassword(e.target.value);
+  const handleInputChangePw = (e) => {
+    setPassword(e.target.value);
+    setIsPwIncorrect(validatePassword(e.target.value));
+    console.log(validatePassword(e.target.value));
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -112,12 +148,14 @@ export default function SignUp() {
                           required
                           fullWidth
                           // name="password"
-                          label="Password"
+                          // label="Password"
+                          label={isPwIncorrectMsg}
                           type="password"
                           id="password"
                           autoComplete="new-password"
                           onChange={handleInputChangePw}
                           value={password}
+                          error={isPwIncorrect}
                         />
                         <Link
                           href="/user/login"

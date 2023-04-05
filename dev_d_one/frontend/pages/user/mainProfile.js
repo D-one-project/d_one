@@ -66,7 +66,7 @@ export default function SignUp() {
   const handleInputChangeEmail = (e) => setEmail(e.target.value);
   const handleInputChangePw = (e) => setPassword(e.target.value);
 
-  const profileComponent = () => {
+  const profileComponents = () => {
     return (
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -226,7 +226,7 @@ export default function SignUp() {
             // alignItems: "center",
           }}
         >
-          {profileComponent()}
+          {profileComponents()}
           <div
             style={{
               marginTop: "10px",

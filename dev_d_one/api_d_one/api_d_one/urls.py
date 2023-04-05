@@ -35,7 +35,6 @@ urlpatterns = [
     path('apiv01/', include(router.urls)), # it provides GET, POST, DELETE, etc automatically by rest_framework
     # path('accounts/', include('allauth.urls')),
     # path('users/', include('users.urls')),
-
     path('apiv01/csrf/', views.csrf_token_view, name='csrf_token'),
 ]#+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

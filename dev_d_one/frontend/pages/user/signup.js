@@ -49,31 +49,26 @@ export default function SignUp() {
 
   //handleSubmit function
   const handleSubmit = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     // const data = new FormData(event.currentTarget);
     const dataTobeSent = {
       email: email,
       username: email,
       password: password,
-      // testData: "test",
-      // if passwrod not matching, it shouldn't be running
     };
-    console.log(dataTobeSent);
+    // console.log("**DATATOBESENT: ", dataTobeSent);
 
     if (!pwValidator) {
       await api.post("/apiv01/userView/", dataTobeSent);
-
       const users = await api.get("/apiv01/userView/");
+
       users.data.map((data) => {
-        // console.log("data inside map:: ", data);
+        console.log("data inside map:: ", data);
         if (data.email === dataTobeSent.email) router.push(`/user/${data.id}`);
       });
     } else {
       alert("password not matching");
     }
-
-    //To use validation interactively upon inputting data, then use state variables.
-    //It's using FormData for now to collect data from each component and then to send them over to backend
   };
 
   const handleInputChangeEmail = (e) => setEmail(e.target.value);
