@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'layout_api',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
 
     # 'allauth',
     # 'allauth.account',
@@ -209,7 +210,8 @@ STATIC_ROOT = os.path.join(STATIC_ROOT_INT, 'staticfiles')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
 }

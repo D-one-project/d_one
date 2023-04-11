@@ -20,6 +20,9 @@ from layout_api import views #, mainFeaturedPostView, bodyPostView, newsPost
 from django.conf import settings
 from django.conf.urls.static import static
 
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+
 #Yea!
 router = routers.DefaultRouter()
 router.register(r'todos', views.TodoView, 'todo')
@@ -33,8 +36,8 @@ router.register(r'userView', views.userView,'userView')
 urlpatterns = [
     path('admin/', admin.site.urls) , 
     path('apiv01/', include(router.urls)), # it provides GET, POST, DELETE, etc automatically by rest_framework
-    # path('accounts/', include('allauth.urls')),
-    # path('users/', include('users.urls')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('apiv01/csrf/', views.csrf_token_view, name='csrf_token'),
 ]#+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

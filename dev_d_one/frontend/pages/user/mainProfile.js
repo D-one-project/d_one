@@ -34,6 +34,8 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 // const theme = createTheme();
 
+import Cookies from "js-cookie";
+
 const theme = createTheme({
   palette: {
     mode: "dark",
@@ -84,7 +86,7 @@ export default function SignUp() {
                 src="/images/temp/userPhoto.png" // Route of the image file
                 height={240} // Desired size with correct aspect ratio
                 width={240} // width={144} // Desired size with correct aspect ratio
-                // alt="Your Name"
+                alt="User Photo"
               />
 
               <Typography component="h1" variant="h5">
@@ -171,9 +173,13 @@ export default function SignUp() {
   };
 
   const bottomButtonComponents = () =>
-    buttonList.map((data) => {
+    buttonList.map((data, idx) => {
       return (
-        <Link href="/user/signup" style={{ textDecoration: "none" }}>
+        <Link
+          href="/test_url/test"
+          style={{ textDecoration: "none" }}
+          key={idx}
+        >
           <Button
             sx={{
               marginRight: "1rem",
@@ -192,10 +198,45 @@ export default function SignUp() {
       );
     });
 
+  const handleVerifyBtn = async (e) => {
+    console.log("button clicked");
+
+    const token = Cookies.get("jwt");
+    console.log("token:", token);
+    const options = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    await api
+      .get("/apiv01/emailView/", options)
+      .then((data) => {
+        console.log("data from api:", data);
+      })
+      .catch((res) => {
+        alert(`Error: ${res.response.data.detail}`);
+        alert("You need to log-in first");
+        router.push("/user/login");
+      });
+  };
+
+  const loggedInVerificationComponent = () => {
+    return (
+      <div
+        style={{
+          padding: "1rem",
+        }}
+      >
+        <Button onClick={handleVerifyBtn} variant="contained">
+          Pull data test through user authentication [TEST]
+        </Button>
+      </div>
+    );
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box
-        style={{ overflow: "hidden" }}
+        style={{ overflow: "scroll" }}
         sx={{
           // margin: "2rem",
           padding: "1rem",
@@ -223,10 +264,11 @@ export default function SignUp() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            // alignItems: "center",
+            alignItems: "center",
           }}
         >
           {profileComponents()}
+
           <div
             style={{
               marginTop: "10px",
@@ -236,6 +278,7 @@ export default function SignUp() {
           >
             {bottomButtonComponents()}
           </div>
+          {loggedInVerificationComponent()}
         </div>
       </Box>
     </ThemeProvider>

@@ -16,6 +16,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useRouter } from "next/router";
+
+import Cookies from "js-cookie";
 // const theme = createTheme();
 
 const theme = createTheme({
@@ -47,13 +49,25 @@ export default function SignUp() {
     if (isPwIncorrect === false) {
       console.log("you are in the right path");
       await api
-        .post("/apiv01/userView/login/", dataTobeSent)
-        .then((response) => {
-          alert(response.data.message);
+        .post("/api/token/", dataTobeSent)
+        .then((res) => {
+          alert("login success!!!");
+          console.log("Token: ", res.data.access);
+          Cookies.set("jwt", res.data.access);
+          router.push("/user/mainProfile");
         })
-        .catch((response) => {
-          alert("Login credentials incorrect");
+        .catch((res) => {
+          alert(`Incorrect login credentials (msg: ${res})`);
         });
+
+      // await api
+      //   .post("/apiv01/userView/login/", dataTobeSent)
+      //   .then((response) => {
+      //     alert(response.data.message);
+      //   })
+      //   .catch((response) => {
+      //     alert("Login credentials incorrect");
+      //   });
       setEmail("");
       setPassword("");
       return;
