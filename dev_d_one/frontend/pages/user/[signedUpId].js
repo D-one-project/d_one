@@ -1,17 +1,18 @@
 // import { api } from "../waitList/index";
 import Link from "next/link";
-import { api } from "../../components/api_axios";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-waitListPage.getInitialProps = async (ctx) => {
-  console.log("getInitialProps - query:", ctx.query);
-  const { signedUpId } = ctx.query;
-  const { data } = await api.get(`/apiv01/userView/${signedUpId}/`);
-  const { email } = data;
-  return { signedUpId, email };
-};
+export default function waitListPage() {
+  const router = useRouter();
+  const { signedUpId, email } = router.query;
+  console.log("router.query:", router.query);
 
-export default function waitListPage(props) {
-  const { email } = props;
+  useEffect(() => {
+    if (signedUpId === undefined || email === undefined) {
+      router.push("/user/signup");
+    }
+  }, []);
 
   return (
     <div

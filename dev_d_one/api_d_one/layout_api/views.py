@@ -20,8 +20,7 @@ from django.contrib.auth.decorators import login_required
 
 
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.exceptions import PermissionDenied
-from rest_framework import status
+from rest_framework.exceptions import AuthenticationFailed
 
 
 from django.middleware import csrf
@@ -82,13 +81,14 @@ class emailView(viewsets.ModelViewSet):
         # pprint.pprint(request)
         return super().list(request, *args, **kwargs)
 
-    # @login_required
     def retrieve(self, request, *args, **kwargs):
         print('** Detail(Retrieve)')
 
         # print('session:', request.session)
         print('request.user:', request.user)
         print('request.auth:', request.auth)
+
+        
         # print('authenticated?:')
         # print('+++++++++++++++++')
         # pprint.pprint(self)
@@ -102,10 +102,11 @@ class userView(viewsets.ModelViewSet):
 
     # permission control per function
     def get_permissions(self):
-        if self.action in ['create', 'list', 'retrieve']: 
+        if self.action in ['create', 'list']: 
             return []
         else:
             return [IsAuthenticated()]
+            
     # need to create to handle the situation that user's not authenticated.
     # redirect the unauthenticated user to somewhere
 

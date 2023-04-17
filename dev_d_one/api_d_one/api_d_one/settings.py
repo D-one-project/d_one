@@ -117,8 +117,8 @@ CORS_ORIGIN_WHITELIST = [
     'http://frontendcontainer',
     'http://localhost',
     'http://127.0.0.1',
-    
 ]
+
 
 ROOT_URLCONF = 'api_d_one.urls'
 
@@ -212,6 +212,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
+        'rest_framework_simplejwt.authentication.JWTAuthentication',        
+    ],
+    'EXCEPTION_HANDLER': 'layout_api.utils.custom_exception_handler'
 }
