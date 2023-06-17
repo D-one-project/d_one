@@ -55,6 +55,8 @@ export default function SignUp() {
 
   const router = useRouter();
 
+  console.log("id from login page:", router.query);
+
   //handleSubmit function
   const handleSubmit = async (event) => {
     const dataTobeSent = {

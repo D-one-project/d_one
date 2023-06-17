@@ -16,8 +16,8 @@ services:
       - ALLOWED_HOSTS=* #d_one_backend,localhost,127.0.0.1,d_one_frontend,nginx
       - BACKEND_ENDPOINT=http://backendcontainer:8000
     #      - REACT_SERVICE_HOST=d_one_frontend
-    volumes:
-      - ./dev_d_one/api_d_one:/app/api_d_one
+    # volumes:
+    #   - ./dev_d_one/api_d_one:/app/api_d_one
     networks:
       - d_one_network
 

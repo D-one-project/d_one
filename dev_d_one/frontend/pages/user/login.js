@@ -54,7 +54,16 @@ export default function SignUp() {
           alert("login success!!!");
           console.log("Token: ", res.data.access);
           Cookies.set("jwt", res.data.access);
-          router.push("/user/mainProfile");
+
+          console.log("res::", res.data);
+
+          // /user/mainProfile/{id}...? to do so, need id. here. once authenticated, need to get id from there..?
+          router.push({
+            pathname: `/user/mainProfile`,
+            query: { id: res.id },
+          });
+
+          // router.push("/user/mainProfile");
         })
         .catch((res) => {
           alert(`Incorrect login credentials (msg: ${res})`);

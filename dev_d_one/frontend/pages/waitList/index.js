@@ -94,6 +94,7 @@ export default function WaitList() {
         console.log("Duplicated Email or no Email input");
         console.log("error:", error.response);
         console.log(error);
+        alert(error.response.data.email);
         setEmail("");
       }
     }

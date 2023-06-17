@@ -25,23 +25,23 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 #Yea!
 router = routers.DefaultRouter()
-router.register(r'todos', views.TodoView, 'todo')
-router.register(r'mainFeaturedPostView', views.mainFeaturedPostView, 'mainFeaturedPostView')
-router.register(r'bodyPostView', views.bodyPostView, 'bodyPostView')
-router.register(r'newsPost', views.newsPost, 'newsPost')
-router.register(r'emailView', views.emailView, 'emailView')
+# router.register(r'todos', views.TodoView, 'todo')
+# router.register(r'mainFeaturedPostView', views.mainFeaturedPostView, 'mainFeaturedPostView')
+# router.register(r'bodyPostView', views.bodyPostView, 'bodyPostView')
+# router.register(r'newsPost', views.newsPost, 'newsPost')
+router.register(r'emailView', views.WaitlistEmailView, 'emailViewTest') # thrid argument ..what for..?
 router.register(r'userView', views.userView,'userView')
 
 
 urlpatterns = [
     path('admin/', admin.site.urls) , 
     path('apiv01/', include(router.urls)), # it provides GET, POST, DELETE, etc automatically by rest_framework
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('apiv01/csrf/', views.csrf_token_view, name='csrf_token'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'), # not... in use
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), # not... in use
 ]#+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 
-for d in router.urls:
-    print('**** urls ****', d)
+# for d in router.urls:
+#     print('**** urls ****', d)

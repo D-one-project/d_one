@@ -61,20 +61,24 @@ export default function SignUp() {
     if (!pwValidator) {
       await api
         .post("/apiv01/userView/", dataTobeSent)
-        .then((res) =>
-          console.log("## ## ## ## --- successfully signed up --- ## ## ##")
-        );
-      //After creating a new user in the backend, the code below will redirect a user to the registered page.
-      const users = await api.get("/apiv01/userView/"); //if it gets data here, it means the user data has been successfully created
-      users.data.map((data) => {
-        console.log("data inside map:: ", data);
-        if (data.email === dataTobeSent.email) {
-          router.push({
-            pathname: `/user/${data.id}`,
-            query: { signedUpId: data.id, email: data.email },
+        .then(async (res) => {
+          console.log("Successfully signed up");
+          const users = await api.get("/apiv01/userView/"); //if it gets data here, it means the user data has been successfully created
+          users.data.map((data) => {
+            console.log("data inside map:: ", data);
+            if (data.email === dataTobeSent.email) {
+              router.push({
+                pathname: `/user/${data.id}`,
+                query: { signedUpId: data.id, email: data.email },
+              });
+            }
           });
-        }
-      });
+        })
+        .catch((e) => {
+          console.log("error!!", e.response.data.username[0]);
+          alert(e.response.data.username[0]);
+        });
+      //After creating a new user in the backend, the code below will redirect a user to the registered page.
     } else {
       alert("password not matching");
     }
