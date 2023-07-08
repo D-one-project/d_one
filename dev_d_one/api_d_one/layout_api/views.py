@@ -11,7 +11,7 @@ from rest_framework.decorators import action
 # from django.template import context
 
 # Create your views here.
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 # from .serializers import TodoSerializer, emailSerializer, mainFeaturedPostSerializer, bodyPostSerializer, newsPostSerializer
 from .serializers import UserProfileSerializer, emailSerializer
 # from .serializers import userProfileSerializer
@@ -24,11 +24,14 @@ from django.contrib.auth.decorators import login_required
 
 
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+
 from rest_framework.exceptions import AuthenticationFailed
 
 
 from django.middleware import csrf
 from django.http import JsonResponse
+
 
 def csrf_token_view(request):
     token = csrf.get_token(request)
@@ -79,6 +82,12 @@ def csrf_token_view(request):
 class WaitlistEmailView(viewsets.ModelViewSet):
     serializer_class = emailSerializer
     queryset = WaitlistEmail.objects.all()
+
+    # 6/26 추가한부분 - 여기서 로그인이 되었는지를 확인함 authenticate() 를 실행하는거나 마찬가지
+    # it will check if a user is authenticated using Token (see the connection in settings.py)
+    # it's like running authenticate() method provided by Django
+    authentication_classes = [TokenAuthentication]
+    # For now, it may not be needed, but
     permission_classes = [IsAuthenticated]
     # permission_classes = [permissions.AllowAny]
 
@@ -106,6 +115,8 @@ class WaitlistEmailView(viewsets.ModelViewSet):
         # print('+++++++++++++++++')
         # pprint.pprint(self)
         # pprint.pprint(request)
+        print('---## req.user: ', request.user)
+        print('---## req.auth: ', request.auth)
         return super().list(request, *args, **kwargs)
 
     def retrieve(self, request, *args, **kwargs):
@@ -124,15 +135,9 @@ class WaitlistEmailView(viewsets.ModelViewSet):
 
 class userView(viewsets.ModelViewSet):
     serializer_class = userSerializer
-    queryset = User.objects.all()
-    
-    
-
-    # serializer_class = UserProfileSerializer
-    # queryset = UserProfile.objects.all()
+    queryset = User.objects.all() # Django default User model
     
     permission_classes = [IsAuthenticated]
-
 
     # permission control per function
     def get_permissions(self):
@@ -144,14 +149,79 @@ class userView(viewsets.ModelViewSet):
     # need to create to handle the situation that user's not authenticated.
     # redirect the unauthenticated user to somewhere
 
+    # POST - Backend/apiv01/userView/ - signup page's logic
     def create(self, request, *args, **kwargs):        
         print('receved data from frontend : ', request.data)
         return super().create(request, *args, **kwargs)
 
+    # GET - Backend/apiv01/userView/{id} - load user's information logic
     def retrieve(self, request, *args, **kwargs):
         print('Retrieve function')
         return super().retrieve(request, *args, **kwargs)
 
+    # Load users list
     def list(self, request, *args, **kwargs):
         print('List function')
+        print('requrest:', request)
         return super().list(request, *args, **kwargs)
+    
+    # Update user (not user's profile, just user data)
+    # With the received username and password, it will update user data.. it may need to change password?
+    def update(self, request, *args, **kwargs):
+        print(request.data)
+        # print(self)
+        # return super().update(request, *args, **kwargs) 
+        return Response('')
+    
+class UserProfileView(viewsets.ModelViewSet):
+    serializer_class = UserProfileSerializer
+    queryset = UserProfile.objects.all()
+
+    # If not authenticated, any of the functions beow will not run. 
+    # But, currently, if authenticated, user can see other people's data as well using postman, need to improve!
+    permission_classes = [IsAuthenticated] 
+
+    # def get_permissions(self):
+    #     return super().get_permissions()
+
+    def update(self, request, *args, **kwargs):
+        print('request.data: ', request.data)
+
+        request.data['user'] = request.user.id
+        print('updated request.data:', request.data)
+
+        return super().update(request, *args, **kwargs)
+            
+    # def partial_update(self, request, *args, **kwargs):
+    #     print('axios.patch will put you here in')
+    #     print(request.data)
+    #     print('user:', request.user)
+    #     print('auth:', request.auth)
+    #     return super().partial_update(request, *args, **kwargs)
+
+    
+# test purpose view
+def login_view(request):
+    if request.method == 'GET':
+        print('###$$$## Login view function! gET')
+
+    return(HttpResponse('Okay~ ByE~'))
+
+
+
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
+
+class CustomAuthToken(ObtainAuthToken):
+    print('-- CustomAuthToken View')
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        # token = Token.objects.get_or_create(user=user)
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk
+        })

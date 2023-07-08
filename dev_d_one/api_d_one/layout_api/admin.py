@@ -30,6 +30,7 @@ class UserProfileInline(admin.StackedInline):
 # Define a new User admin
 class UserAdmin(BaseUserAdmin):
     inlines = [UserProfileInline]
+    # inlines = []
 
 
 # Re-register UserAdmin

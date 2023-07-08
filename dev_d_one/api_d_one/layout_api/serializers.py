@@ -68,10 +68,20 @@ class emailSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     # user = userSerializer()
+    # user = serializers.PrimaryKeyRelatedField(read_only=True)
+    # user = serializers.ReadOnlyField()
+
 
     class Meta:
         model = UserProfile
         fields = '__all__'
+        # fields = ['city', 'state', 'status', 'gender', 'bio', 'interest']
+        partial = True
+
+    # def update(self, instance, validated_data):
+    #     # user 필드는 업데이트하지 않음
+    #     validated_data.pop('user', None)
+    #     return super().update(instance, validated_data)
 
 # class with uppercase, convention. need to update
 class userSerializer(serializers.ModelSerializer):

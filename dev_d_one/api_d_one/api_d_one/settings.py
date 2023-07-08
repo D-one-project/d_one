@@ -211,11 +211,6 @@ STATIC_ROOT = os.path.join(STATIC_ROOT_INT, 'staticfiles')
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-        # 'api_d_one.authentication.MyJWTAuthentication',        
-        # 'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
-
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',        
     ],
     'EXCEPTION_HANDLER': 'layout_api.utils.custom_exception_handler'
 }

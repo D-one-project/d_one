@@ -44,39 +44,38 @@ export default function SignUp() {
       username: email,
       password: password,
     };
-    console.log(dataTobeSent);
+    console.log('User credentials sent to the backend:', dataTobeSent);
 
     if (isPwIncorrect === false) {
-      console.log("you are in the right path");
+      console.log("Password type verification success");
       await api
         .post("/api/token/", dataTobeSent)
         .then((res) => {
           alert("login success!!!");
-          console.log("Token: ", res.data.access);
-          Cookies.set("jwt", res.data.access);
+          console.log('Return ** : ', res);
+          // console.log("res::", res.data);
 
-          console.log("res::", res.data);
 
-          // /user/mainProfile/{id}...? to do so, need id. here. once authenticated, need to get id from there..?
+          console.log('-Token: ', res.data.token);
+          console.log('-Username: ', dataTobeSent.username);
+          console.log('-userID:', res.data.user_id);
+
+          //Store token/user_id from /api/token/ in the localStorage
+          //put it in somewhere else later.. to strengthen security
+          localStorage.setItem('tokenSet', JSON.stringify(res.data));
+
           router.push({
-            pathname: `/user/mainProfile`,
-            query: { id: res.id },
-          });
+            pathname: `/user/mainProfile/${dataTobeSent.username}`,
+            // query: { username: dataTobeSent.username }, 
+          },
+            // { shallow: true },
+          );
 
-          // router.push("/user/mainProfile");
         })
         .catch((res) => {
           alert(`Incorrect login credentials (msg: ${res})`);
         });
 
-      // await api
-      //   .post("/apiv01/userView/login/", dataTobeSent)
-      //   .then((response) => {
-      //     alert(response.data.message);
-      //   })
-      //   .catch((response) => {
-      //     alert("Login credentials incorrect");
-      //   });
       setEmail("");
       setPassword("");
       return;

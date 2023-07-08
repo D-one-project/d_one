@@ -20,9 +20,15 @@ export default function waitListPage() {
 
   if (isLoading) {
     return (
-      <h5 style={{ display: "flex", justifyContent: "center" }}>
-        Processing....
-      </h5>
+      <div style={{
+        width: '100%',
+        height: '100vh',
+        backgroundColor: 'black'
+      }}>
+        <h3 style={{ display: "flex", justifyContent: "center", alignItems: 'center', color: 'white', height: '100vh' }}>
+          Processing....
+        </h3>
+      </div>
     );
   } else {
     return (

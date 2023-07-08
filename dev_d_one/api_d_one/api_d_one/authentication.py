@@ -10,7 +10,7 @@ class MyJWTAuthentication(JWTAuthentication):
         # call parent authenticate method to verify token
         user = super().authenticate(request)
         if user is not None:
-            # get user ID from JWT payload
+            # get user ID from JWT payloaddo
             user_id = user[0].id
 
             # 여기 안에가 지금 작동을 안함... 이거만 되면..? 

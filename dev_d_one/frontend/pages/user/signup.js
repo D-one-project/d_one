@@ -60,7 +60,7 @@ export default function SignUp() {
 
     if (!pwValidator) {
       await api
-        .post("/apiv01/userView/", dataTobeSent)
+        .post("/apiv01/userView/", dataTobeSent) // /apiv01/userview with POST request ==> DRF router's default url route to create a user
         .then(async (res) => {
           console.log("Successfully signed up");
           const users = await api.get("/apiv01/userView/"); //if it gets data here, it means the user data has been successfully created

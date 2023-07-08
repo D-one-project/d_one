@@ -13,7 +13,7 @@ def custom_exception_handler(exc, context):
     print('!!! Alert:', response.data)
     
     if AuthenticationFailed:
-        print('You are being redirected to the Login page')
+        print('will do nothing at this moment. this is just to see if my custom err handlers works :)')
 
     # Now add the HTTP status code to the response.
     if response is not None:
