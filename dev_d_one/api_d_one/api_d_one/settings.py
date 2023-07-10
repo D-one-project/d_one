@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'layout_api',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
 
     # 'allauth',
     # 'allauth.account',
@@ -116,8 +117,8 @@ CORS_ORIGIN_WHITELIST = [
     'http://frontendcontainer',
     'http://localhost',
     'http://127.0.0.1',
-    
 ]
+
 
 ROOT_URLCONF = 'api_d_one.urls'
 
@@ -206,3 +207,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = '/static/'
 STATIC_ROOT_INT = os.path.join(BASE_DIR, 'api_d_one')
 STATIC_ROOT = os.path.join(STATIC_ROOT_INT, 'staticfiles')
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'EXCEPTION_HANDLER': 'layout_api.utils.custom_exception_handler'
+}
+
+# SIMPLE_JWT = {
+#   # It will work instead of the default serializer(TokenObtainPairSerializer).
+#   "TOKEN_OBTAIN_SERIALIZER": "layout_api.serializers.MyTokenObtainPairSerializer",
+#   # ...
+# }

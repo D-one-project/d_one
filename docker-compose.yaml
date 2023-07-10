@@ -17,7 +17,7 @@ services:
       - BACKEND_ENDPOINT=http://backendcontainer:8000
     #      - REACT_SERVICE_HOST=d_one_frontend
     # volumes:
-    #   - ./dev_d_one/api_d_one:/app
+    #   - ./dev_d_one/api_d_one:/app/api_d_one
     networks:
       - d_one_network
 

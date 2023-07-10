@@ -1,4 +1,5 @@
 import { api } from "../../components/api_axios";
+import { useEffect, useState } from "react";
 
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
@@ -27,30 +28,65 @@ export default function SignUp() {
   // const [email, setEmail] = useState();
   // const [username, setUsername] = useState();
   // const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [pwValidator, setPwValidator] = useState(false);
+  //if true, it means password not matching. this boolean data goes into error prop of TextField to display red text
+  const pwVaidateErrorMsg = pwValidator
+    ? "Password not matching"
+    : "Input your password here";
+
+  useEffect(() => {
+    if (password === confirmPassword) {
+      setPwValidator(false); //if false, it means matching
+    } else {
+      setPwValidator(true);
+    }
+  }, [password, confirmPassword]);
+
   const router = useRouter();
 
   //handleSubmit function
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    // const data = new FormData(event.currentTarget);
     const dataTobeSent = {
-      email: data.get("email"),
-      password: data.get("password"),
-      username: data.get("username"),
-      testData: "test",
+      email: email,
+      username: email,
+      password: password,
     };
-    console.log(dataTobeSent);
-    await api.post("/apiv01/userView/", dataTobeSent);
+    // console.log("**DATATOBESENT: ", dataTobeSent);
 
-    const users = await api.get("/apiv01/userView/");
-    users.data.map((data) => {
-      // console.log("data inside map:: ", data);
-      if (data.email === dataTobeSent.email) router.push(`/user/${data.id}`);
-    });
-
-    //To use validation interactively upon inputting data, then use state variables.
-    //It's using FormData for now to collect data from each component and then to send them over to backend
+    if (!pwValidator) {
+      await api
+        .post("/apiv01/userView/", dataTobeSent) // /apiv01/userview with POST request ==> DRF router's default url route to create a user
+        .then(async (res) => {
+          console.log("Successfully signed up");
+          const users = await api.get("/apiv01/userView/"); //if it gets data here, it means the user data has been successfully created
+          users.data.map((data) => {
+            console.log("data inside map:: ", data);
+            if (data.email === dataTobeSent.email) {
+              router.push({
+                pathname: `/user/${data.id}`,
+                query: { signedUpId: data.id, email: data.email },
+              });
+            }
+          });
+        })
+        .catch((e) => {
+          console.log("error!!", e.response.data.username[0]);
+          alert(e.response.data.username[0]);
+        });
+      //After creating a new user in the backend, the code below will redirect a user to the registered page.
+    } else {
+      alert("password not matching");
+    }
   };
+
+  const handleInputChangeEmail = (e) => setEmail(e.target.value);
+  const handleInputChangePw = (e) => setPassword(e.target.value);
+  const handleInputChangeCfPw = (e) => setConfirmPassword(e.target.value);
 
   return (
     <ThemeProvider theme={theme}>
@@ -102,7 +138,7 @@ export default function SignUp() {
                     sx={{ mt: 3 }}
                   >
                     <Grid container spacing={2}>
-                      <Grid item xs={12}>
+                      {/* <Grid item xs={12}>
                         <TextField
                           // autoComplete="given-name"
                           name="username"
@@ -112,26 +148,44 @@ export default function SignUp() {
                           label="User Name"
                           autoFocus
                         />
-                      </Grid>
+                      </Grid> */}
                       <Grid item xs={12}>
                         <TextField
                           required
                           fullWidth
                           id="email"
                           label="Email Address"
-                          name="email"
+                          // name="email"
                           autoComplete="email"
+                          value={email}
+                          onChange={handleInputChangeEmail}
                         />
                       </Grid>
                       <Grid item xs={12}>
                         <TextField
                           required
                           fullWidth
-                          name="password"
+                          // name="password"
                           label="Password"
                           type="password"
                           id="password"
                           autoComplete="new-password"
+                          onChange={handleInputChangePw}
+                          value={password}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          required
+                          fullWidth
+                          // name="confirmPassword"
+                          label={pwVaidateErrorMsg}
+                          type="password"
+                          id="confirmPassword"
+                          autoComplete="new-password"
+                          onChange={handleInputChangeCfPw}
+                          value={confirmPassword}
+                          error={pwValidator}
                         />
                       </Grid>
                       <Grid item xs={12}>
