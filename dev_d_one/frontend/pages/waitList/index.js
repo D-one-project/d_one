@@ -165,7 +165,7 @@ export default function WaitList() {
             justifyContent: "space-between",
           }}
         >
-          <img src="https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/Meetlof_logo.png" />
+          <img src="https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/Meetlof_logo.png"/>
           <div>
             <Button
               sx={{ marginRight: "1rem", borderRadius: "2rem" }}
