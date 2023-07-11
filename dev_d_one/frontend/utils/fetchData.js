@@ -19,4 +19,5 @@ export async function fetchData() {
     };
 
     return await api.get(`/apiv01/userView/${tokenSet.user_id}/`, options)
+
 }

@@ -1,4 +1,6 @@
-import { api } from "../../../components/api_axios";
+import NewProfileComponent from "./newProfile";
+
+// import { api } from "../../../components/api_axios";
 import { useEffect, useState } from "react";
 
 import * as React from "react";
@@ -16,17 +18,17 @@ import {
   Link,
   Grid,
   Box,
-  TextField,
+  // TextField,
   CssBaseline,
-  FormControlLabel,
-  Checkbox,
+  // FormControlLabel,
+  // Checkbox,
   Card,
   CardContent,
   Typography,
-  CardActions,
+  // CardActions,
 } from "@mui/material";
 
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+// import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useRouter } from "next/router";
@@ -56,23 +58,23 @@ export default function mainProfile() {
     { buttonName: "Friends", url: "friendList" },
   ];
 
+  async function loadData() {
+    await fetchData()
+      .then(res => {
+        console.log('Fetched Data: ', res.data)
+        setdata(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log('Fetching data has errors:', err);
+        setLoading(true);
+        router.push('/user/login/');
+      })
+  }
+
 
   useEffect(() => {
-    async function loadData() {
-      await fetchData()
-        .then(res => {
-          console.log('Fetched Data: ', res.data)
-          setdata(res.data);
-          setLoading(false)
-        })
-        .catch(err => {
-          console.log('Fetching data has errors:', err)
-          router.push('/user/login/')
-        })
-    }
     loadData();
-
-
   }, [])
 
 
@@ -86,6 +88,7 @@ export default function mainProfile() {
     router.push('/user/login/');
   }
 
+  // editScreenComponent = profileComponents + bottomButtonComponents
   const profileComponents = () => {
     return (
       <Grid container spacing={2}>
@@ -215,7 +218,34 @@ export default function mainProfile() {
       );
     });
 
-  
+
+  const editScreenComponent = () => {
+    return (
+      <>
+        {loading ? '......' : profileComponents()}
+        <div
+          style={{
+            marginTop: "10px",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          {loading ? '......' : bottomButtonComponents()}
+        </div>
+      </>
+    )
+  }
+
+
+  // const newProfileScreencomponent = () => {
+  //   return (
+  //     <>
+  //       {newProfile()}
+  //     </>
+  //   )
+  // }
+
+  // Rendering starts here
   return (
     <ThemeProvider theme={theme}>
       <Box
@@ -250,16 +280,9 @@ export default function mainProfile() {
             alignItems: "center",
           }}
         >
-          {loading? '......' : profileComponents()}
-          <div
-            style={{
-              marginTop: "10px",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            {loading? '......' : bottomButtonComponents()}
-          </div>
+          {console.log('userdata.profile:', userdata.profile)}
+          {loading ? '......' : userdata.profile ? editScreenComponent() : <NewProfileComponent data={userdata} loadData={loadData} />}
+          {console.log('can u see here?')}
         </div>
       </Box>
     </ThemeProvider>

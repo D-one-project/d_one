@@ -184,6 +184,11 @@ class UserProfileView(viewsets.ModelViewSet):
     # def get_permissions(self):
     #     return super().get_permissions()
 
+    def create(self, request, *args, **kwargs):
+        print('request.data: ', request.data)
+        # return Response('nothing~')
+        return super().create(request, *args, **kwargs)
+
     def update(self, request, *args, **kwargs):
         print('request.data: ', request.data)
 

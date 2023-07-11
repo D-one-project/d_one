@@ -100,12 +100,15 @@ export default function EditProfile() {
     console.log('updatedData: ', updatedData);
     console.log('token user id:', tokenSet.user_id)
 
+
+    // To get profile database's id
+    // Each model has its own id, user id != profile id.
+    // When a new user created, it must create empty profile automatically. post save func thing should..come in?
     let profile_id = ''
 
     await api.get(`/apiv01/userView/${tokenSet.user_id}/`, options).then(res => {
       console.log(res.data);
       profile_id = res.data.profile.id
-      console.log('여긴 작동햇으요')
     })
 
     await api.put(`/apiv01/userProfileView/${profile_id}/`, updatedData, options).then(res => {
@@ -114,7 +117,7 @@ export default function EditProfile() {
 
       router.push('./')
     })
-    
+
   }
 
 
@@ -197,7 +200,8 @@ export default function EditProfile() {
             "url('https://d-one.s3.us-west-2.amazonaws.com/LandingPage/static/img/signup_background.png')",
           backgroundSize: "cover",
           backgroundPosition: "left",
-        }}
+        }
+      }
       >
         <Link href="/waitList">
           <img
